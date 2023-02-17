@@ -32,6 +32,16 @@ namespace Illustrate.Controllers
         {
             return View();
         }
+        
+        public IActionResult Demo0337()
+        {
+            return View();
+        }
+
+        public IActionResult Demo0338()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
