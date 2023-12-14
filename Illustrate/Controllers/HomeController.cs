@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Illustrate.Models;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace Illustrate.Controllers
 {
@@ -12,11 +14,41 @@ namespace Illustrate.Controllers
         {
             _logger = logger;
         }
+         
+        public IActionResult Coasters()
+        {            
+            return View();
+        }
 
-        public IActionResult Index()
+        public IActionResult Flowers()
         {
             return View();
         }
+
+        public IActionResult Seashore()
+        {
+            return View();
+        }
+
+        public IActionResult Religious()
+        {
+            return View();
+        }
+
+        public IActionResult Misc()
+        {
+            return View();
+        }
+
+        public IActionResult Christmas()
+        {
+            return View();
+        }
+
+        public IActionResult Index()
+        {           
+            return View();
+        } 
 
         public IActionResult Contact()
         {
@@ -32,16 +64,8 @@ namespace Illustrate.Controllers
         {
             return View();
         }
-        
-        public IActionResult Demo0337()
-        {
-            return View();
-        }
+       
 
-        public IActionResult Demo0338()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

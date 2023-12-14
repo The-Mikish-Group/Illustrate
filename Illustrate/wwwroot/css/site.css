@@ -1,18 +1,49 @@
-html {
-  font-size: 14px;
+div a {
+    color: black;
+    border: 2px solid transparent;
+    padding: 4px;
+    font-size: 24px;
+    text-decoration: none;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    div a:hover {
+        color: darkgreen;
+        border-color: lightgreen;
+    }
+
+#image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+    #image-container a {
+        margin-right: 10px;
+        border: 2px solid transparent;
+        padding: 4px;
+        display: flex;
+    }
+
+        #image-container a:hover {
+            border-color: lightgreen;
+        }
+
+.image-wrapper {
+    margin: 10px;
+    position: relative;
 }
 
-body {
-  margin-bottom: 60px;
+    .image-wrapper:hover img {
+        border: 2px solid lightgreen;
+        padding: 4px;
+    }
+
+    .image-wrapper:hover .loading-overlay {
+        visibility: hidden;
+    }
+
+img {
+    max-height: 180px;
+    cursor: pointer;
+    transition: border 0.3s ease-in-out;
 }
