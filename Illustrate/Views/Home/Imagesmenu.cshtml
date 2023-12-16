@@ -1,0 +1,22 @@
+﻿@{
+    // Location of Folders
+    var folderLocation = "images/";   
+
+    // Read the folder names in the folder location
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Content/{0}", folderLocation)))
+                           .Select(folder => System.IO.Path.GetFileName(folder))
+                           .ToList();
+}
+
+<!-- Folder selections Menu -->
+<h2 class="text-center">Links by Catagory</h2>
+<div class="bg-black fs-2 p-2 m-2">
+    <div>
+        @foreach (var folder in folders)
+        {
+            <div class="menuItem m-2 p-2" id="@folder" style="display: initial;">
+                <a class="menuItem m-2 p-2" asp-controller="home" asp-action="@folder">@folder</a>
+            </div>
+        }
+    </div>    
+</div>

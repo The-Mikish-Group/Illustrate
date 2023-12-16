@@ -1,67 +1,92 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Illustrate.Models;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 
 namespace Illustrate.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
-         
-        public IActionResult Coasters()
-        {            
+
+        public IActionResult ImagesMenu()
+        {
             return View();
         }
 
         public IActionResult Flowers()
         {
-            return View();
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
+            return View("Images");
         }
 
         public IActionResult Seashore()
         {
-            return View();
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
+            return View("Images");
         }
 
         public IActionResult Religious()
         {
-            return View();
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
+            return View("Images");
         }
 
         public IActionResult Misc()
         {
-            return View();
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
+            return View("Images");
         }
 
         public IActionResult Christmas()
         {
-            return View();
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
+            return View("Images");
         }
 
         public IActionResult Index()
-        {           
+        {
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
             return View();
         } 
 
         public IActionResult Contact()
         {
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
             return View();
         }
 
         public IActionResult TOS()
         {
+            string viewName = ControllerContext.ActionDescriptor.ActionName;
+            ViewData["ViewName"] = viewName;
+
             return View();
         }
        

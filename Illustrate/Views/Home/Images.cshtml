@@ -1,20 +1,98 @@
-﻿<!-- File: Views/Home/Images.cshtml -->
-@model IEnumerable<string>
+﻿@{
+    // Location of Folders
+    var folderLocation = "Content/Images/";
 
-@{
-    ViewData["Title"] = "Image Gallery";
-}
+    // Filter for these type of files
+    var myFilter = "*.png"; 
 
-<h1>@ViewData["Title"]</h1>
-
-<div id="image-container">
-    @foreach (var file in Model)
+    // Read the folder names in the folder location
+    string myDirectory = string.Format("wwwroot/{0}", folderLocation);
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), myDirectory))
+                           .Select(folder => System.IO.Path.GetFileName(folder))
+                           .ToList();
+    var files = await Task.Run(() =>
     {
-        <img style="height:200px;" src="/images/coasters/@Url.Content(file)" alt="@file" />
+        var currentFolder = ViewData["ViewName"]?.ToString() ?? ""; // Use an empty string if null
+        var target = string.Format("{0}/{1}", folderLocation, currentFolder);
+
+        return Directory.GetFiles(System.IO.Path.Combine(Directory.GetCurrentDirectory(), myDirectory, currentFolder), myFilter)
+                        .Select(file => $"~/" + target + $"/{System.IO.Path.GetFileName(file)}")
+                        .ToList();
+    });
+}
+<style>
+    body {
+        background-color: lightskyblue;
+    }
+
+</style>
+
+<!-- Folder selections Menu -->
+<div class="bg-black fs-2 p-2">
+    @foreach (var folder in folders)
+    {
+        <div class="menuItem m-2 p-2" id="@folder" style="display: initial;">
+            <a class="menuItem m-2 p-2" asp-controller="home" asp-action="@folder">@folder</a>
+        </div>
     }
 </div>
 
-<div>
-    <a asp-action="Coasters">View Coasters</a>
+<!-- Folder Heading -->
+<div class="bg-white text-black fs-3 pt-0 ps-2 pe-2 pb-2">@ViewData["ViewName"] Images</div>
+
+<!-- Image List Section -->
+<div id="image-container">
+
+    <!-- Loop through the files array and display the contents -->
+    @foreach (var file in @files)
+    {
+        <!-- image-wrapper -->
+        <div class="image-wrapper">
+
+            <!-- link opens image in new screen -->
+            <a href="@Url.Content(file)" target="_blank">
+
+                <!-- Image to display-->
+                <img data-src="@Url.Content(file)" alt="" />
+            </a>
+        </div>
+    }
 </div>
 
+<script defer>
+    document.addEventListener("DOMContentLoaded", function () {
+        var images = document.querySelectorAll("img[data-src]");
+        var imageContainer = document.getElementById("image-container");
+
+        var observer = new IntersectionObserver(
+            function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        var img = entry.target;
+                        img.src = img.getAttribute("data-src");
+                        observer.unobserve(img);
+                    }
+                });
+            }
+        );
+
+        images.forEach(function (img) {
+            observer.observe(img);
+        });
+
+        var checkLoadingCompletion = function () {
+            if (Array.from(images).every(img => img.complete)) {
+                imageContainer.style.display = "flex";
+            } else {
+                setTimeout(checkLoadingCompletion, 100);
+            }
+        };
+
+        checkLoadingCompletion();
+    });
+</script>
+
+<!-- Hide the current menu selction -->
+<script>    
+    document.getElementById("@ViewData["ViewName"]").style.display = "none";
+</script>
