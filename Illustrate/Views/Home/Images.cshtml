@@ -1,99 +1,28 @@
 ﻿@{
-    // Location of Images folders
-    var folderLocation = "Content/Images/";  
-    
-    // Read the folder names in the folder location
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/{0}", folderLocation)))
-                           .Select(folder => System.IO.Path.GetFileName(folder))
-                           .ToList();
-
-    // Images folders path
-    string foldersPath = string.Format("wwwroot/{0}", folderLocation);
-    
-    // Filter for these type of image files
-    var myFilter = "*.png";
-
-    // Read the files in the folder
-    var files = await Task.Run(() =>
-    {
-        var currentFolder = ViewData["ViewName"]?.ToString() ?? ""; // Use an empty string if null
-        var target = string.Format("{0}/{1}", folderLocation, currentFolder);
-
-        return Directory.GetFiles(System.IO.Path.Combine(Directory.GetCurrentDirectory(), foldersPath, currentFolder), myFilter)
-                        .Select(file => $"~/" + target + $"/{System.IO.Path.GetFileName(file)}")
-                        .ToList();
-    });
+    var viewName = ViewData["ViewName"]?.ToString() ?? "";
+    var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", "Images");
+    var files = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), "*.png")
+                         .Select(file => $"~/{System.IO.Path.Combine("Content", "Images", viewName, System.IO.Path.GetFileName(file))}")
+                         .ToList();
 }
 
-<!-- Folder Selection Menu -->
-<h2 class="text-center">Images by folder</h2>
-<div class="row p-2 m-2">
-    <div class="text-black text-center p-3">
-        @foreach (var folder in folders)
-        {
-            <div class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-1 p-2" id="@folder" style="width:max-content; display:inline-flex;">
-                <a class="text-black" asp-controller="home" asp-action="Images" asp-route-viewName="@folder">@folder</a>
-            </div>
-        }
-    </div>
-</div>
+<!-- Got to Top Button -->
+<button onclick="topFunction()" id="my-button" title="Go to top">Top</button>
 
-<!-- Heading for Images '(foldername) Images' -->
-<div class="text-black text-center fs-3 pt-0 ps-2 pe-2 pb-2">@ViewData["ViewName"] Images</div>
+<!-- Heading -->
+<div class="text-black text-center fs-3 pt-0 ps-2 pe-2 pb-2">@viewName Images</div>
 
-<!-- Folder's Images -->
+<!-- Folders Menu -->
+<partial name="_FoldersMenu" />
+
+<!-- Image Files -->
 <div id="image-container">
 
-    <!-- Loop through the files array and display the contents -->
-    @foreach (var file in @files)
+    <!-- Loop through the files and create a link for each one -->
+    @foreach (var file in files)
     {
-        <!-- image-wrapper -->
-        <div class="image-wrapper">
-
-            <!-- link opens image in new screen -->
-            <a href="@Url.Content(file)" target="_blank">
-
-                <!-- Image to display-->
-                <img data-src="@Url.Content(file)" alt="" />
-            </a>
-        </div>
+        <a class="ms-auto me-auto" href="@Url.Content(file)" target="_blank" title="ImageLink">
+            <img data-src="@Url.Content(file)" alt="" />
+        </a>
     }
 </div>
-
-<script defer>
-    document.addEventListener("DOMContentLoaded", function () {
-        var images = document.querySelectorAll("img[data-src]");
-        var imageContainer = document.getElementById("image-container");
-
-        var observer = new IntersectionObserver(
-            function (entries, observer) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        var img = entry.target;
-                        img.src = img.getAttribute("data-src");
-                        observer.unobserve(img);
-                    }
-                });
-            }
-        );
-
-        images.forEach(function (img) {
-            observer.observe(img);
-        });
-
-        var checkLoadingCompletion = function () {
-            if (Array.from(images).every(img => img.complete)) {
-                imageContainer.style.display = "flex";
-            } else {
-                setTimeout(checkLoadingCompletion, 100);
-            }
-        };
-
-        checkLoadingCompletion();
-    });
-</script>
-
-<!-- Hide the current menu selction -->
-<script>    
-    document.getElementById("@ViewData["ViewName"]").style.display = "none";
-</script>

@@ -86,7 +86,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script async defer src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
     <!-- Site Styles -->
@@ -95,47 +95,7 @@
 
 </head>
 
-
-<body>
-    <style>
-        /* General link styles */
-        a {
-            text-decoration: none;
-            border: 1px solid transparent; /* Use 1px border for both normal and hover states */
-            border-radius: 5px; /* Add border-radius for curved corners */
-            transition: color 0.3s ease, border-color 0.3s ease, font-weight 0.3s ease; /* Add transitions for a smoother effect */
-            padding: 5px; /* Add padding for better visual appearance */
-        }
-
-            /* Hover styles for all links */
-            a:hover {
-                border-color: greenyellow !important;
-                /* color: black !important; */
-                font-weight: bold !important;
-            }
-
-            /* Selected styles for all links */
-            a.selected {
-                border-color: transparent !important;
-                /* color: black !important; */
-                font-weight: bold !important;
-            }
-
-        /* Navbar link styles */
-        .navbar-nav .nav-item a {            
-            border: 1px solid transparent; /* Use 1px border for both normal and hover states */
-            border-radius: 5px; /* Add border-radius for curved corners */
-            transition: color 0.3s ease, border-color 0.3s ease, font-weight 0.3s ease; /* Add transitions for a smoother effect */
-            padding: 5px; /* Add padding for better visual appearance */
-        }
-
-            /* Hover styles for navbar links */
-            .navbar-nav .nav-item a:hover {
-                border-color: greenyellow !important;               
-                font-weight: bold !important;
-            }
-    </style>
-
+<body>    
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">

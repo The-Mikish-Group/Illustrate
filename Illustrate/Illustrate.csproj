@@ -5,6 +5,9 @@
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
+    <Title>Illustrate</Title>
+    <PackageIcon>BlueSun.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +16,13 @@
     <Content Remove="Views\Home\Flowers.cshtml" />
     <Content Remove="Views\Home\Misc.cshtml" />
     <Content Remove="Views\Home\Religious.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\My Pictures\Start Buttons\BlueSun.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
