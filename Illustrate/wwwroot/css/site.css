@@ -1,5 +1,5 @@
 #image-container {
-    display: flex;
+    display: none;  /* using Lazy Wait */
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -12,16 +12,18 @@
     }
 
         #image-container a:hover {
-            border-color: lightgreen;
+            border-color: green;
         }
 
 .image-wrapper {
+    color: white;
     margin: 10px;
     position: relative;
 }
 
     .image-wrapper:hover img {
-        border: 2px solid lightgreen;
+        color:greenyellow;
+        border: 2px solid green;
         padding: 4px;
     }
 
@@ -34,18 +36,3 @@ img {
     cursor: pointer;
     transition: border 0.3s ease-in-out;
 }
-
-
-
-.menuItem {    
-    color: white;
-    text-decoration: none;
-    border: solid;
-    border: transparent
-}
-
-    .menuItem:focus,
-    .menuItem:hover {       
-        border-color: red;
-        color: red;
-    }

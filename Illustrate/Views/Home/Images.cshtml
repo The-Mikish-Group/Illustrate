@@ -1,46 +1,47 @@
 ﻿@{
-    // Location of Folders
-    var folderLocation = "Content/Images/";
-
-    // Filter for these type of files
-    var myFilter = "*.png"; 
-
+    // Location of Images folders
+    var folderLocation = "Content/Images/";  
+    
     // Read the folder names in the folder location
-    string myDirectory = string.Format("wwwroot/{0}", folderLocation);
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), myDirectory))
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/{0}", folderLocation)))
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
+
+    // Images folders path
+    string foldersPath = string.Format("wwwroot/{0}", folderLocation);
+    
+    // Filter for these type of image files
+    var myFilter = "*.png";
+
+    // Read the files in the folder
     var files = await Task.Run(() =>
     {
         var currentFolder = ViewData["ViewName"]?.ToString() ?? ""; // Use an empty string if null
         var target = string.Format("{0}/{1}", folderLocation, currentFolder);
 
-        return Directory.GetFiles(System.IO.Path.Combine(Directory.GetCurrentDirectory(), myDirectory, currentFolder), myFilter)
+        return Directory.GetFiles(System.IO.Path.Combine(Directory.GetCurrentDirectory(), foldersPath, currentFolder), myFilter)
                         .Select(file => $"~/" + target + $"/{System.IO.Path.GetFileName(file)}")
                         .ToList();
     });
 }
-<style>
-    body {
-        background-color: lightskyblue;
-    }
 
-</style>
-
-<!-- Folder selections Menu -->
-<div class="bg-black fs-2 p-2">
-    @foreach (var folder in folders)
-    {
-        <div class="menuItem m-2 p-2" id="@folder" style="display: initial;">
-            <a class="menuItem m-2 p-2" asp-controller="home" asp-action="@folder">@folder</a>
-        </div>
-    }
+<!-- Folder Selection Menu -->
+<h2 class="text-center">Images by folder</h2>
+<div class="row p-2 m-2">
+    <div class="text-black text-center p-3">
+        @foreach (var folder in folders)
+        {
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-1 p-2" id="@folder" style="width:max-content; display:inline-flex;">
+                <a class="text-black" asp-controller="home" asp-action="Images" asp-route-viewName="@folder">@folder</a>
+            </div>
+        }
+    </div>
 </div>
 
-<!-- Folder Heading -->
-<div class="bg-white text-black fs-3 pt-0 ps-2 pe-2 pb-2">@ViewData["ViewName"] Images</div>
+<!-- Heading for Images '(foldername) Images' -->
+<div class="text-black text-center fs-3 pt-0 ps-2 pe-2 pb-2">@ViewData["ViewName"] Images</div>
 
-<!-- Image List Section -->
+<!-- Folder's Images -->
 <div id="image-container">
 
     <!-- Loop through the files array and display the contents -->
