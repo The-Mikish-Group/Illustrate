@@ -30,22 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
     checkLoadingCompletion();
 });
 
-function hideCurrentMenuSelection(viewName) {
-    if (viewName) {
-        var element = document.getElementById(viewName);
-        if (element) {
-            element.style.display = "none";
-        }
-    }
-}
 
+// Top of screen button
 document.addEventListener("DOMContentLoaded", function () {
-    var viewName = getParameterByName("viewName");
-    hideCurrentMenuSelection(viewName);
 
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function () { scrollFunction() };
-    window.topFunction = function () {topFunction() };
+    window.topFunction = function () { topFunction() };
     function scrollFunction() {
         var mybutton = document.getElementById("my-button");
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -61,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.documentElement.scrollTop = 0;
     }
 
-
     function getParameterByName(name) {
         var url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
@@ -72,4 +62,3 @@ document.addEventListener("DOMContentLoaded", function () {
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 });
-

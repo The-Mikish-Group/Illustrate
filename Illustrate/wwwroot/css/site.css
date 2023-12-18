@@ -52,6 +52,10 @@ img {
     transition: border 0.3s ease-in-out;
 }
 
+.menu-item {
+    width: 120px;
+}
+
 .menu-link {
     text-decoration: none;
     border: 2px solid transparent;
@@ -59,7 +63,6 @@ img {
     transition: color 0.3s ease, border-color 0.3s ease, font-weight 0.3s ease;
     padding: 8px;
     display: inline-block; /* Ensure each menu item is on a new line */
-    width: 90px; /* Set a fixed width for the menu items */
     text-align: center; /* Center the text within the fixed width */
 }
 

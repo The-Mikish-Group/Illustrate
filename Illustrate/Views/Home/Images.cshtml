@@ -1,4 +1,5 @@
 ﻿@{
+    // Read the files
     var viewName = ViewData["ViewName"]?.ToString() ?? "";
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", "Images");
     var files = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), "*.png")
@@ -11,14 +12,13 @@
     <!-- Go to Top Button -->
     <button onclick="topFunction()" id="my-button" title="Go to top">Top</button>
 
+    <!-- Folders Menu -->
+    <partial name="_FoldersMenu" />
+
     <!-- Heading -->
     <div class="text-center mt-3">
         <h2>@viewName Images</h2>
     </div>
-
-    <!-- Folders Menu -->   
-    <partial name="_FoldersMenu" />
-        
 
     <!-- Image Files -->
     <div id="image-container" class="row">
@@ -33,3 +33,18 @@
     </div>
 
 </div>
+
+<script>    
+    hideCurrentMenuSelection('@viewName');
+
+    function hideCurrentMenuSelection(viewName) {
+        var elements = document.querySelectorAll('.menu-item');
+        elements.forEach(function (element) {
+            if (element.getAttribute('data-viewName') === viewName) {
+                element.style.display = 'none';
+            } else {
+                element.style.display = '';
+            }
+        });
+    }
+</script>
