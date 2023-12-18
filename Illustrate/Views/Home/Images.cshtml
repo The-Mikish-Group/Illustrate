@@ -2,27 +2,37 @@
     var viewName = ViewData["ViewName"]?.ToString() ?? "";
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", "Images");
     var files = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), "*.png")
-                         .Select(file => $"~/{System.IO.Path.Combine("Content", "Images", viewName, System.IO.Path.GetFileName(file))}")
-                         .ToList();
+    .Select(file => $"~/{System.IO.Path.Combine("Content", "Images", viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
+    .ToList();
 }
 
-<!-- Got to Top Button -->
-<button onclick="topFunction()" id="my-button" title="Go to top">Top</button>
+<div class="container">
 
-<!-- Heading -->
-<div class="text-black text-center fs-3 pt-0 ps-2 pe-2 pb-2">@viewName Images</div>
+    <!-- Go to Top Button -->
+    <button onclick="topFunction()" id="my-button" title="Go to top" class="btn btn-primary">Top</button>
 
-<!-- Folders Menu -->
-<partial name="_FoldersMenu" />
+    <!-- Heading -->
+    <div class="text-center mt-3">
+        <h2>@viewName Images</h2>
+    </div>
 
-<!-- Image Files -->
-<div id="image-container">
+    <!-- Folders Menu -->
+    <div class="row mb-3">
+        <div class="col">
+            <partial name="_FoldersMenu" />
+        </div>
+    </div>
 
-    <!-- Loop through the files and create a link for each one -->
-    @foreach (var file in files)
-    {
-        <a class="ms-auto me-auto" href="@Url.Content(file)" target="_blank" title="ImageLink">
-            <img data-src="@Url.Content(file)" alt="" />
-        </a>
-    }
+    <!-- Image Files -->
+    <div id="image-container" class="row">
+        @foreach (var file in files)
+        {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
+                <a href="@Url.Content(file)" target="_blank" title="ImageLink" class="d-block text-center">
+                    <img class="menu-link img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
+                </a>
+            </div>
+        }
+    </div>
+
 </div>

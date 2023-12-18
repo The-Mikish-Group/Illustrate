@@ -82,7 +82,7 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Illustrate Net</title>
+    <title>@ViewData["ViewName"] - Illustrate Net</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -108,22 +108,22 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Home Link -->
                         <li class="nav-item">
-                            <a class="nav-link @(IsLinkSelected("Home", "Index"))" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link menu-link @(IsLinkSelected("Home", "Index"))" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
                         <!-- Contact Link -->
                         <li class="nav-item">
-                            <a class="nav-link @(IsLinkSelected("Home", "Contact"))" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                            <a class="nav-link menu-link @(IsLinkSelected("Home", "Contact"))" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
 
                         <!-- Privacy Link -->
                         <li class="nav-item">
-                            <a class="nav-link @(IsLinkSelected("Home", "Privacy"))" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link menu-link @(IsLinkSelected("Home", "Privacy"))" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
 
                         <!-- TOS Link -->
                         <li class="nav-item">
-                            <a class="nav-link @(IsLinkSelected("Home", "TOS"))" asp-area="" asp-controller="Home" asp-action="TOS">TOS</a>
+                            <a class="nav-link menu-link @(IsLinkSelected("Home", "TOS"))" asp-area="" asp-controller="Home" asp-action="TOS">TOS</a>
                         </li>
 
                     </ul>
@@ -139,7 +139,7 @@
     </div>
 
     <footer class="border-top text-muted text-center">
-        <div class="container">
+        <div class="container pt-2">
         &copy; 1998-2024 - <a class="text-dark text-muted text-center" href="@siteURL">@ogSite_Name</a>
         </div>
     </footer>

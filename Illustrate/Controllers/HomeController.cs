@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Illustrate.Models;
 using System.Diagnostics;
-using System.IO;
 
 namespace Illustrate.Controllers
 {
@@ -14,36 +13,31 @@ namespace Illustrate.Controllers
             _logger = logger;
         }
         public IActionResult Index()
-        {
-            string viewName = ControllerContext.ActionDescriptor.ActionName;
-            ViewData["ViewName"] = viewName;
+        {           
+            ViewData["ViewName"] = "Home";
             return View();
         }
 
         public IActionResult Contact()
-        {
-            string viewName = ControllerContext.ActionDescriptor.ActionName;
-            ViewData["ViewName"] = viewName;
+        {            
+            ViewData["ViewName"] = "Contact";
             return View();
         }
 
         public IActionResult Privacy()
-        {
-            string viewName = ControllerContext.ActionDescriptor.ActionName;
-            ViewData["ViewName"] = viewName;
+        {           
+            ViewData["ViewName"] = "Privacy";
             return View();
         }
 
         public IActionResult TOS()
-        {
-            string viewName = ControllerContext.ActionDescriptor.ActionName;
-            ViewData["ViewName"] = viewName;
+        {            
+            ViewData["ViewName"] = "Terms of Service";
             return View();
         }
         public IActionResult FoldersMenu()
-        {
-            string viewName = ControllerContext.ActionDescriptor.ActionName;
-            ViewData["ViewName"] = viewName;
+        {            
+            ViewData["ViewName"] = "Image Folders Menu";
             return View();
         }
 
