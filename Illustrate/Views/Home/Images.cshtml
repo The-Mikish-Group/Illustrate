@@ -9,19 +9,16 @@
 <div class="container">
 
     <!-- Go to Top Button -->
-    <button onclick="topFunction()" id="my-button" title="Go to top" class="btn btn-primary">Top</button>
+    <button onclick="topFunction()" id="my-button" title="Go to top">Top</button>
 
     <!-- Heading -->
     <div class="text-center mt-3">
         <h2>@viewName Images</h2>
     </div>
 
-    <!-- Folders Menu -->
-    <div class="row mb-3">
-        <div class="col">
-            <partial name="_FoldersMenu" />
-        </div>
-    </div>
+    <!-- Folders Menu -->   
+    <partial name="_FoldersMenu" />
+        
 
     <!-- Image Files -->
     <div id="image-container" class="row">
@@ -29,7 +26,7 @@
         {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
                 <a href="@Url.Content(file)" target="_blank" title="ImageLink" class="d-block text-center">
-                    <img class="menu-link img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
+                    <img class="menu-link w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
                 </a>
             </div>
         }

@@ -81,34 +81,23 @@ img {
 
 .menu-link {
     text-decoration: none;
-    border: 1px solid transparent; /* Use 1px border for both normal and hover states */
-    border-radius: 5px; /* Add border-radius for curved corners */
-    transition: color 0.3s ease, border-color 0.3s ease, font-weight 0.3s ease; /* Add transitions for a smoother effect */
-    padding: 5px; /* Add padding for better visual appearance */
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: color 0.3s ease, border-color 0.3s ease, font-weight 0.3s ease;
+    padding: 8px;
+    display: inline-block; /* Ensure each menu item is on a new line */
+    width: 100px; /* Set a fixed width for the menu items */
+    text-align: center; /* Center the text within the fixed width */
 }
 
-    /* Hover styles for all links */
     .menu-link:hover {
         border-color: greenyellow !important;
         font-weight: bold !important;
     }
 
-    /* Selected styles for all links */
     .menu-link.selected {
         border-color: transparent !important;
         font-weight: bold !important;
     }
 
-/*.menu-link {
-    text-decoration: none;*/ /* Remove underlines from links */
-    /*color: #333;*/ /* Set link text color */
-    /*font-weight: bold;*/ /* Set font weight to bold */
-    /*transition: color 0.3s ease;*/ /* Add a smooth color transition on hover */
-    /* Optionally, you can add additional styling, such as padding or margin */
-    /*padding: 8px;
-    margin: 4px;
-}
 
-    .menu-link:hover {
-        color: #555;*/ /* Change link text color on hover */
-    /*}*/
