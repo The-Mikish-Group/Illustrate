@@ -47,33 +47,6 @@ body {
     justify-content: center;
 }
 
-    #image-container a {
-        margin-right: 10px;
-        border: 2px solid transparent;
-        padding: 4px;
-        display: flex;
-    }
-
-        #image-container a:hover {
-            border-color: green;
-        }
-
-.image-wrapper {
-    color: white;
-    margin: 10px;
-    position: relative;
-}
-
-    .image-wrapper:hover img {
-        color: greenyellow;
-        border: 2px solid green;
-        padding: 4px;
-    }
-
-    .image-wrapper:hover .loading-overlay {
-        visibility: hidden;
-    }
-
 img {
     cursor: pointer;
     transition: border 0.3s ease-in-out;
@@ -86,7 +59,7 @@ img {
     transition: color 0.3s ease, border-color 0.3s ease, font-weight 0.3s ease;
     padding: 8px;
     display: inline-block; /* Ensure each menu item is on a new line */
-    width: 100px; /* Set a fixed width for the menu items */
+    width: 90px; /* Set a fixed width for the menu items */
     text-align: center; /* Center the text within the fixed width */
 }
 
