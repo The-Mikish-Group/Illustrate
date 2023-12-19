@@ -15,7 +15,7 @@ body {
 }
 
 /* Used by Auto Top function Must be #ID : Used by JS document.getElementById */
-#my-button {
+#top-button {
     display: none;
     position: fixed;
     bottom: 20px;
@@ -31,12 +31,12 @@ body {
     border-radius: 4px;
 }
 
-    #my-button:hover {
+    #top-button:hover {
         background-color: #555;
     }
 
-    #my-button:active,
-    #my-button:focus {
+    #top-button:active,
+    #top-button:focus {
         background-color: red;
     }
 
