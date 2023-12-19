@@ -3,6 +3,7 @@
     var viewName = ViewData["ViewName"]?.ToString() ?? "";
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", "Images");
     var files = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), "*.png")
+    
     .Select(file => $"~/{System.IO.Path.Combine("Content", "Images", viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
     .ToList();
 }

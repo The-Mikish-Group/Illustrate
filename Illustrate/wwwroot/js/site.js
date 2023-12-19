@@ -47,19 +47,6 @@
         document.documentElement.scrollTop = 0;
     };
 
-    //function scrollFunction() {
-    //    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    //        mybutton.style.display = "block";
-    //    } else {
-    //        mybutton.style.display = "none";
-    //    }
-    //}
-
-    //function topFunction() {
-    //    document.body.scrollTop = 0;
-    //    document.documentElement.scrollTop = 0;
-    //}
-
     document.querySelectorAll('.menu-link').forEach(function (link) {
         link.addEventListener('click', function () {
             var viewName = link.dataset.viewName;
@@ -82,12 +69,12 @@
     function fetchData(viewName) {
         currentRequest = fetch(`/home/images?viewName=${viewName}`)
             .then(response => response.text())
-            .then(updateUI)
-            .catch(handleError);
+            .then(html => updateUI(html, viewName))
+            .catch(error => handleError(error, viewName));
     }
 
     // Function to update UI
-    function updateUI(html) {
+    function updateUI(html, viewName) {
         imageContainer.innerHTML = html;
 
         // Trigger lazy loading for new images (if applicable)
@@ -103,11 +90,14 @@
     }
 
     // Function to handle errors
-    function handleError(error) {
+    function handleError(error, viewName) {
         console.error('Error loading view:', error);
 
         // Display a user-friendly error message
         imageContainer.innerHTML = '<div class="alert alert-danger" role="alert">Oops! Something went wrong. Please try again later.</div>';
+
+        // You might want to hide the current menu selection even if there's an error
+        hideCurrentMenuSelection(viewName);
     }
 
     // Function to hide current menu selection
