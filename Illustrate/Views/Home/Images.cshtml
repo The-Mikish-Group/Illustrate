@@ -1,9 +1,18 @@
 ﻿@{
-    // Read the files
+    // viewName will be the name of one of the folders imageFolder
     var viewName = ViewData["ViewName"]?.ToString() ?? "";
-    var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", "Images");
-    var files = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), "*.png")
+
+    // Filter on these files
+    var filter = "*.png";
+
+    // the starting folder in MVC's wwwRoot/Context
+    var startingFolder = "Images";
     
+    // the file content path
+    var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", startingFolder);
+    
+    // Files
+    var files = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter)    
     .Select(file => $"~/{System.IO.Path.Combine("Content", "Images", viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
     .ToList();
 }
@@ -32,12 +41,10 @@
             </div>
         }
     </div>
-
 </div>
 
 <script>    
     hideCurrentMenuSelection('@viewName');
-
     function hideCurrentMenuSelection(viewName) {
         var elements = document.querySelectorAll('.menu-item');
         elements.forEach(function (element) {
