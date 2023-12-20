@@ -1,7 +1,7 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    // Lazy load images
     var images = document.querySelectorAll("img[data-src]");
     var imageContainer = document.getElementById("image-container");
+    var currentRequest; // Declare currentRequest here
 
     var observer = new IntersectionObserver(
         function (entries, observer) {
