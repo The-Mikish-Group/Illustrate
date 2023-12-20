@@ -1,5 +1,5 @@
-﻿// Lazy load images
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
+    // Lazy load images
     var images = document.querySelectorAll("img[data-src]");
     var imageContainer = document.getElementById("image-container");
 
@@ -28,11 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     checkLoadingCompletion();
-
-    // Top button stuff
+   
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function () { scrollFunction() };
-    window.topFunction = function () { topFunction() };
+
     function scrollFunction() {
         var mybutton = document.getElementById("top-button");
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -43,28 +42,45 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // When the user clicks on the button, scroll to the top of the document
+    window.topFunction = function () { topFunction() };  
+
     function topFunction() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-    }
-
+    }    
 });
 
 // Hide current menu selection
-function hideCurrentMenuSelection(viewName) {
-    var elements = document.querySelectorAll('.menu-item');
-    elements.forEach(function (element) {
-        if (element.getAttribute('data-viewName') === viewName) {
-            element.style.display = 'none';
-        } else {
-            element.style.display = '';
+
+
+// Event listener for menu links
+document.querySelectorAll('.menu-link').forEach(function (link) {
+    link.addEventListener('click', function () {
+        var viewName = link.dataset.viewName;
+
+        if (currentRequest) {
+            currentRequest.abort();
         }
+
+        // Display a loading spinner or any other visual indication
+        imageContainer.innerHTML = '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>';
+
+        // Make a new request for the selected view with a delay
+        setTimeout(function () {
+            fetchData(viewName);
+        }, 4000); // Adjust the delay time (in milliseconds) as needed
     });
-}
-
-// Top of screen button
-document.addEventListener("DOMContentLoaded", function () {
-
-     
 });
 
+// Function to handle errors
+function handleError(error, viewName) {
+    console.error('Error loading view:', error);
+
+    // Display a user-friendly error message
+    imageContainer.innerHTML = '<div class="alert alert-danger" role="alert">Oops! Something went wrong. Redirecting to the home page...</div>';
+
+    // Redirect to the home page after a delay (e.g., 3 seconds)
+    setTimeout(function () {
+        window.location.href = '/'; // Update the URL as needed
+    }, 4000);
+}

@@ -44,7 +44,7 @@ namespace Illustrate.Controllers
         public IActionResult Images(string viewName)
         {
             ViewData["ViewName"] = viewName;
-            return View();
+            return View("Images");
         }   
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

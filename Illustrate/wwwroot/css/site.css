@@ -42,7 +42,7 @@ body {
 
 /* Image Gallery Stuff */
 #image-container {
-    display: none; /* using Lazy Wait */
+    display: none; 
     flex-wrap: wrap;
     justify-content: center;
 }

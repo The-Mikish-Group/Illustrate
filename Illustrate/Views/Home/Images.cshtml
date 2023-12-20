@@ -1,24 +1,39 @@
 ﻿@{
     // viewName will be the name of one of the folders imageFolder
-    var viewName = ViewData["ViewName"]?.ToString() ?? "";
+    var viewName = ViewData["ViewName"].ToString();
 
-    // Filter on these files
-    var filter = "*.png";
+    // Filter on all files initially
+    var filter = "*.*";
 
     // the starting folder in MVC's wwwRoot/Context
     var startingFolder = "Images";
-    
+
     // the file content path
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", startingFolder);
-    
-    // Files
-    var files = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter)    
-    .Select(file => $"~/{System.IO.Path.Combine("Content", "Images", viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
-    .ToList();
+
+    // Retrieve all files
+    var allFiles = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter);
+
+    // Filter only *.png and *.jpg files
+    var files = allFiles
+        .Where(file => System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
+                       System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase))
+        .Select(file => $"~/{System.IO.Path.Combine("Content", "Images", viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
+        .ToList();
 }
 
-<div class="container">
+<style>
+    #image-container div .filename {
+        color: black !important;
+        text-decoration: none !important;
+    }
 
+    #image-container div:hover .filename {
+        color: green !important;
+    }
+</style>
+
+<div class="container">
     <!-- Go to Top Button -->
     <button onclick="topFunction()" id="top-button" title="Go to top">Top</button>
 
@@ -35,16 +50,21 @@
         @foreach (var file in files)
         {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
-                <a class="d-block text-center" href="@Url.Content(file)" target="_blank" title="ImageLink" >
+                <a class="d-block text-center text-decoration-none" href="@Url.Content(file)" target="_blank" title="Full Screen">
                     <img class="menu-link w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
+                    <div class="text-black text-center">
+                        @System.IO.Path.GetFileName(file).ToString()
+                    </div>
                 </a>
             </div>
         }
     </div>
 </div>
 
-<script>    
+<script>
+
     hideCurrentMenuSelection('@viewName');
+
     function hideCurrentMenuSelection(viewName) {
         var elements = document.querySelectorAll('.menu-item');
         elements.forEach(function (element) {
@@ -54,5 +74,8 @@
                 element.style.display = '';
             }
         });
+
     }
+
 </script>
+
