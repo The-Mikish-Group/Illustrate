@@ -1,21 +1,18 @@
 ﻿@{
-    // Controller
-    var targetController = "MV";
-
-    // Folder to read
-    var targetFolder = targetController + "_Images";
-
+    // Controller and Folder to read
+    string currentController = ViewContext.RouteData.Values["controller"].ToString();
+   
     // viewName will be the name of one of the folders imageFolder
-    var viewName = ViewData["ViewName"]?.ToString() ?? "ImagesMenu";
+    var viewName = ViewData["ViewName"]?.ToString() ?? "Galleries";
 
     // Filter on all files initially
     var filter = "*.*";
 
     // the file content path
-    var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content", targetFolder);
+    var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Galleries", currentController);
 
     // Read the folder names in the folder location
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Content/{0}", targetFolder)))
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Galleries/{0}", currentController)))
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
 
@@ -26,7 +23,7 @@
     var files = allFiles
         .Where(file => System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
                        System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase))
-        .Select(file => $"~/{System.IO.Path.Combine("Content", targetFolder, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
+        .Select(file => $"~/{System.IO.Path.Combine("Galleries", currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
         .ToList();
 }
 
@@ -41,7 +38,7 @@
             {
                 <div class="col menu-item" data-viewName="@folder">
                     <div class="bg-light text-center p-0 border border border-dark rounded-3">
-                        <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@targetController" asp-action="Images" asp-route-viewName="@folder">@folder</a>
+                        <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
                     </div>
                 </div>
             }
@@ -50,7 +47,7 @@
 
     <!-- Heading -->
     <div class="text-center mt-3">
-        <h2>@viewName Images</h2>
+        <h2>@viewName Gallery</h2>
     </div>
 
     <!-- Image Files -->

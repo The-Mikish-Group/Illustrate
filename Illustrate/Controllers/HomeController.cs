@@ -6,12 +6,7 @@ namespace Illustrate.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
         public IActionResult Index()
         {           
             ViewData["ViewName"] = "Home";
@@ -34,18 +29,7 @@ namespace Illustrate.Controllers
         {            
             ViewData["ViewName"] = "Terms of Service";
             return View();
-        }
-        public IActionResult ImagesMenu()
-        {            
-            ViewData["ViewName"] = "Image Folders";
-            return View();
-        }
-
-        public IActionResult Images(string viewName)
-        {
-            ViewData["ViewName"] = viewName;
-            return View("Images");
-        }
+        }        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

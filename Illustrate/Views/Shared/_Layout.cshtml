@@ -11,7 +11,7 @@
     string site_Name = "The Mikish Group";
     string siteName = "Illustrate";    
     string siteURL = "https://illustrate.net";
-    string pageShareFolder = siteURL + "/Content/PageShares/";
+    string pageShareFolder = siteURL + "/PageShares/";
     string pageShareImage = "BlueSun-ps.png";
     string pageShareImageHeight = "1200";
     string pageShareImageWidth = "1200";
@@ -66,19 +66,19 @@
     <meta name="google-site-verification" content="23ZjV4j9CxM5SWQXeC7pB-ylHq3qhcPpyoncr5A7GnA" />
 
     <!-- FavIcon(s) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/content/icons/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="~/content/icons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="~/content/icons/favicon-32x32.png" />
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    
+    <link rel="apple-touch-icon" sizes="180x180" href="~/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="~/icons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="~/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
+    <link rel="manifest" href="/icons/site.webmanifest">
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- My Site.js -->
-    <script async defer src="~/js/site.js" asp-append-version="true"></script>
-
+    @* <script async defer src="~/js/site.js" asp-append-version="true"></script> *@
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 

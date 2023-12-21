@@ -1,4 +1,4 @@
-﻿// Lazy load images
+﻿// Lazy load Gallery
 document.addEventListener("DOMContentLoaded", function () {
     var images = document.querySelectorAll("img[data-src]");
     var imageContainer = document.getElementById("image-container");

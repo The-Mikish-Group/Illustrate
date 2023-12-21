@@ -6,33 +6,17 @@ namespace Illustrate.Controllers
 {
     public class APController : Controller
     {
-        private readonly ILogger<APController> _logger;
-
-        public APController(ILogger<APController> logger)
-        {
-            _logger = logger;
-        }
         public IActionResult Index()
-        {           
-            ViewData["ViewName"] = "Home";
-            return View("ImagesMenu");
-        }
-       
-        public IActionResult ImagesMenu()
-        {            
-            ViewData["ViewName"] = "Image Folders";
+        {
+            ViewData["ViewName"] = "Galleries";
             return View();
-        }
+        }    
 
-        public IActionResult Images(string viewName)
+        public IActionResult Gallery(string viewName)
         {
             ViewData["ViewName"] = viewName;
-            return View("Images");
+            return View("Gallery");
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        
     }
 }
