@@ -4,37 +4,20 @@ using System.Diagnostics;
 
 namespace Illustrate.Controllers
 {
-    public class HomeController : Controller
+    public class MVController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<MVController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public MVController(ILogger<MVController> logger)
         {
             _logger = logger;
         }
         public IActionResult Index()
         {           
             ViewData["ViewName"] = "Home";
-            return View();
+            return View("ImagesMenu");
         }
-
-        public IActionResult Contact()
-        {            
-            ViewData["ViewName"] = "Contact";
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {           
-            ViewData["ViewName"] = "Privacy";
-            return View();
-        }
-
-        public IActionResult TOS()
-        {            
-            ViewData["ViewName"] = "Terms of Service";
-            return View();
-        }
+       
         public IActionResult ImagesMenu()
         {            
             ViewData["ViewName"] = "Image Folders";
@@ -46,7 +29,6 @@ namespace Illustrate.Controllers
             ViewData["ViewName"] = viewName;
             return View("Images");
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

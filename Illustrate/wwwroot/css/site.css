@@ -42,10 +42,19 @@ body {
 
 /* Image Gallery Stuff */
 #image-container {
-    display: none; 
+    display: none;
     flex-wrap: wrap;
     justify-content: center;
 }
+
+    #image-container div .filename {
+        color: black !important;
+        text-decoration: none !important;
+    }
+
+    #image-container div:hover .filename {
+        color: green !important;
+    }
 
 img {
     cursor: pointer;
@@ -53,7 +62,7 @@ img {
 }
 
 .menu-item {
-    width: 120px;
+    width: 200px;
 }
 
 .menu-link {
@@ -75,5 +84,3 @@ img {
         border-color: transparent !important;
         font-weight: bold !important;
     }
-
-

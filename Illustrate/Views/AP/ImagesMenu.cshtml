@@ -1,0 +1,27 @@
+﻿@{
+    // Controller
+    var targetController = "AP";
+
+    // Folder to read
+    var targetFolder = targetController + "_Images";
+
+    // Read the folder names in the folder location
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Content/{0}", targetFolder)))
+                           .Select(folder => System.IO.Path.GetFileName(folder))
+                           .ToList();
+
+}
+ 
+<!-- Folders Menu -->
+<div class="container text-center">
+    <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
+        @foreach (var folder in folders)
+        {
+            <div class="col menu-item" data-viewName="@folder">
+                <div class="bg-light text-center p-0 border border border-dark rounded-3">
+                    <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@targetController" asp-action="Images" asp-route-viewName="@folder">@folder</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

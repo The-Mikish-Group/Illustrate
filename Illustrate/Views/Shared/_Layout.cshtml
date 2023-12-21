@@ -15,7 +15,7 @@
     string pageShareImage = "BlueSun-ps.png";
     string pageShareImageHeight = "1200";
     string pageShareImageWidth = "1200";
-    string title = ViewBag.Message + " | " + siteName; ;
+    string title = ViewBag.Message + " - " + siteName; ;
     string description = "Enjoying Life!";  
     string canonical = siteURL;
     string image = pageShareFolder + pageShareImage;
@@ -71,16 +71,18 @@
     <link rel="icon" type="image/png" sizes="32x32" href="~/content/icons/favicon-32x32.png" />
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
-    <title>@ViewData["ViewName"] - Illustrate Net</title>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script async defer src="~/js/site1.js" asp-append-version="true"></script>
+
+    <!-- My Site.js -->
+    <script async defer src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 
 
-    <!-- Site Styles -->
+    <!-- Site Style CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Illustrate.styles.css" asp-append-version="true" />
 

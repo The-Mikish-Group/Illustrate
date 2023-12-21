@@ -16,6 +16,8 @@
     <Content Remove="Views\Home\Flowers.cshtml" />
     <Content Remove="Views\Home\Misc.cshtml" />
     <Content Remove="Views\Home\Religious.cshtml" />
+    <Content Remove="Views\Shared\_BC_ImagesMenu.cshtml" />
+    <Content Remove="Views\Shared\_ImagesMenu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
