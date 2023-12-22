@@ -47,7 +47,7 @@
 
     <!-- Heading -->
     <div class="text-center mt-3">
-        <h2>@viewName Gallery</h2>
+        <h2>@viewName</h2>
     </div>
 
     <!-- Image Files -->
@@ -58,7 +58,9 @@
                 <a class="d-block text-center text-decoration-none" href="@Url.Content(file)" target="_blank" title="Full Screen">
                     <img class="menu-link w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
                     <div class="text-black text-center">
-                        @System.IO.Path.GetFileName(file).ToString()
+                        @* @System.IO.Path.GetFileName(file).ToString() *@
+                        @System.IO.Path.GetFileName(file).ToString().Substring(0, @System.IO.Path.GetFileName(file).ToString().Length - 4)
+
                     </div>
                 </a>
             </div>
