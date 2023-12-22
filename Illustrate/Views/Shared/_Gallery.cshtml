@@ -1,7 +1,7 @@
 ﻿@{
     // Controller and Folder to read
-    string currentController = ViewContext.RouteData.Values["controller"].ToString();
-   
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+
     // viewName will be the name of one of the folders imageFolder
     var viewName = ViewData["ViewName"]?.ToString() ?? "Galleries";
 

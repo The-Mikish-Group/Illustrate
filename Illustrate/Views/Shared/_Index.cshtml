@@ -1,6 +1,7 @@
 ﻿@{
     // Controller and Folder to read
-    string currentController = ViewContext.RouteData.Values["controller"].ToString();    
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+
 
     // Read the folder names in the folder location
     var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Galleries/{0}", currentController)))
