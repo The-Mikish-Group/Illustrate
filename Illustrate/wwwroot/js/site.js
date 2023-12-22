@@ -1,7 +1,7 @@
 ﻿// Lazy load Gallery
 document.addEventListener("DOMContentLoaded", function () {
     var images = document.querySelectorAll("img[data-src]");
-    var imageContainer = document.getElementById("image-container");
+    var imagesContainer = document.getElementById("images-container");
     
     var observer = new IntersectionObserver(
         function (entries, observer) {
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var checkLoadingCompletion = function () {
         if (Array.from(images).every(img => img.complete)) {
-            imageContainer.style.display = "flex";
+            imagesContainer.style.display = "flex";
         } else {
             setTimeout(checkLoadingCompletion, 100);
         }
@@ -34,13 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function scrollFunction() {
 
-        var mybutton = document.getElementById("top-button");
+        var topbutton = document.getElementById("top-button");
 
         // When the user scrolls down 20px from the top of the document, show the button
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
+            topbutton.style.display = "block";
         } else {
-            mybutton.style.display = "none";
+            topbutton.style.display = "none";
         }
     }
 

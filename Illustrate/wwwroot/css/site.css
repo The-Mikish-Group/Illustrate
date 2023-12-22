@@ -41,18 +41,18 @@ body {
     }
 
 /* Image Gallery Stuff */
-#image-container {
+#image-containers {
     display: none;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-    #image-container div .filename {
+    #image-containers div .filename {
         color: black !important;
         text-decoration: none !important;
     }
 
-    #image-container div:hover .filename {
+    #image-containers div:hover .filename {
         color: green !important;
     }
 

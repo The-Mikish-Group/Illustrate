@@ -1,19 +1,18 @@
 ﻿@{
     // Controller and Folder to read
-    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
-
+    var GalleryFolder = "";   
 
     // Read the folder names in the folder location
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Galleries/{0}", currentController)))
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Gallery/{0}", GalleryFolder)))
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
 
 }
 
 <!-- Heading -->
-<h2 class="text-center">
-    Galleries
-</h2>
+<div class="text-center mt-3">
+    <h2>@ViewData["ViewName"]</h2>
+</div>
 
 <!-- Folders Menu -->
 <div class="container text-center">
@@ -22,9 +21,10 @@
         {
             <div class="col menu-item" data-viewName="@folder">
                 <div class="bg-light text-center p-0 border border border-dark rounded-3">
-                    <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+                    <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@folder">@folder</a>
                 </div>
             </div>
         }
+
     </div>
 </div>

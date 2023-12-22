@@ -11,47 +11,49 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\AP\Galleries.cshtml" />
-    <Content Remove="Views\BC\Galleries.cshtml" />
-    <Content Remove="Views\Galleries\Gallery.cshtml" />
+    <Compile Remove="Views\AP\**" />
+    <Compile Remove="Views\BC\**" />
+    <Compile Remove="Views\Laser\**" />
+    <Compile Remove="Views\MV\**" />
+    <Content Remove="Views\AP\**" />
+    <Content Remove="Views\BC\**" />
+    <Content Remove="Views\Laser\**" />
+    <Content Remove="Views\MV\**" />
+    <EmbeddedResource Remove="Views\AP\**" />
+    <EmbeddedResource Remove="Views\BC\**" />
+    <EmbeddedResource Remove="Views\Laser\**" />
+    <EmbeddedResource Remove="Views\MV\**" />
+    <None Remove="Views\AP\**" />
+    <None Remove="Views\BC\**" />
+    <None Remove="Views\Laser\**" />
+    <None Remove="Views\MV\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\BCController.cs" />
+    <Compile Remove="Controllers\GalleryController.cs" />
+    <Compile Remove="Controllers\HomeController.cs" />
+    <Compile Remove="Controllers\LaserController.cs" />
+    <Compile Remove="Controllers\MVController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Home\Christmas.cshtml" />
     <Content Remove="Views\Home\Demo0337.cshtml" />
     <Content Remove="Views\Home\Flowers.cshtml" />
     <Content Remove="Views\Home\Misc.cshtml" />
     <Content Remove="Views\Home\Religious.cshtml" />
     <Content Remove="Views\Shared\_BC_ImagesMenu.cshtml" />
+    <Content Remove="Views\Shared\_Gallery.cshtml" />
     <Content Remove="Views\Shared\_ImagesMenu.cshtml" />
+    <Content Remove="Views\Shared\_Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\AP\Gallery.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\AP\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\BC\Gallery.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\BC\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\Laser\Gallery.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\Laser\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\MV\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+    <None Include="Views\Shared\Galleries.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

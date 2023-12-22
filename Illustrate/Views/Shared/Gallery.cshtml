@@ -1,0 +1,94 @@
+﻿@{
+    // Controller and Folder to read
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+    string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+
+    // viewName will be the name of one of the folders imageFolder
+    var viewName = ViewData["ViewName"]?.ToString() ?? currentAction;
+
+    // Filter on all files initially
+    var filter = "*.*";
+
+    // The file content path
+    var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", currentAction, currentController);
+
+    // Read the folder names in the folder location
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/Gallery/{currentController}"))
+                           .Select(folder => System.IO.Path.GetFileName(folder))
+                           .ToList();
+
+    // Retrieve all files
+    var allFiles = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter);
+
+    // Filter only *.png and *.jpg files
+    var files = allFiles
+        .Where(file => System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
+                       System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase))
+        .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
+        .ToList();
+}
+
+<!-- Folders Menu -->
+<div class="container text-center">
+    <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
+        @foreach (var folder in folders)
+        {
+            <div class="col menu-item" data-viewName="@folder">
+                <div class="bg-light text-center p-0 border border border-dark rounded-3">
+                    <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container">
+    <!-- Go to Top Button -->
+    <button type="button" onclick="topFunction()" id="top-button" title="Go to top">Top</button>
+    
+    <!-- Heading -->
+    <div class="text-center mt-3">
+        <h2>@viewName</h2>
+    </div>
+
+    <!-- "images-container" (rows of image files) -->
+    <div id="images-container" class="row g-0 g-lg-4">
+
+        <!-- Loop through image files -->
+        @foreach (var file in files)
+        {
+            <!-- Display the image file in a row column -->
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
+
+                <!-- A link to a full-screen image window -->
+                <a class="d-block text-center text-decoration-none" href="@Url.Content(file)" target="_blank" title="Full Screen">
+
+                    <!-- Image to display (this actually displays the image in the row column -->
+                    <img class="menu-link w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
+
+                    <!-- Show the image's name -->
+                    <div class="text-black text-center">
+                        @System.IO.Path.GetFileNameWithoutExtension(file)
+                    </div>
+                </a>
+            </div>
+        }
+    </div>        
+</div>
+
+<script>
+
+    hideCurrentMenuSelection('@viewName');
+
+    function hideCurrentMenuSelection(viewName) {
+        var elements = document.querySelectorAll('.menu-item');
+        elements.forEach(function (element) {
+            if (element.getAttribute('data-viewName') === viewName) {
+                element.style.display = 'none';
+            } else {
+                element.style.display = '';
+            }
+        });
+    }
+
+</script>
