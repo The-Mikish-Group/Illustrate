@@ -1,5 +1,7 @@
-﻿// Lazy load Gallery
+﻿
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Lazy load Gallery
     var images = document.querySelectorAll("img[data-src]");
     var imagesContainer = document.getElementById("images-container");
     
@@ -28,29 +30,24 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     checkLoadingCompletion();
+    // End Lazy Load 
 
-    // Top button stuff
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-
-        var topbutton = document.getElementById("top-button");
+    // Display or hide the topbutton if user has scrolled from screen top
+    window.onscroll = function () {        
 
         // When the user scrolls down 20px from the top of the document, show the button
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            topbutton.style.display = "block";
+            document.getElementById("top-button").style.display = "block";
         } else {
-            topbutton.style.display = "none";
+            document.getElementById("top-button").style.display = "none";
         }
-    }
+    };    
 
-    // When the user clicks on the button, scroll to the top of the document
-    window.topFunction = function () { topFunction() };  
-    
-    function topFunction() {
+    // When the user clicks on the topbutton, scroll to the top of the document
+    window.topFunction = function () {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-    }
+    };    
 });
 
 

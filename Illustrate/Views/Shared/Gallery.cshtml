@@ -1,21 +1,19 @@
-﻿@{
-    // Controller and Folder to read
-    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+﻿<!-- Folders Menu -->
+<partial name="_Menu" />
+@{
+    // Filter on all files initially
+    var filter = "*.*";
+
     string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
 
     // viewName will be the name of one of the folders imageFolder
     var viewName = ViewData["ViewName"]?.ToString() ?? currentAction;
 
-    // Filter on all files initially
-    var filter = "*.*";
+    // Controller and Folder to read
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
 
     // The file content path
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", currentAction, currentController);
-
-    // Read the folder names in the folder location
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/Gallery/{currentController}"))
-                           .Select(folder => System.IO.Path.GetFileName(folder))
-                           .ToList();
 
     // Retrieve all files
     var allFiles = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter);
@@ -27,20 +25,6 @@
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
         .ToList();
 }
-
-<!-- Folders Menu -->
-<div class="container text-center">
-    <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
-        @foreach (var folder in folders)
-        {
-            <div class="col menu-item" data-viewName="@folder">
-                <div class="bg-light text-center p-0 border border border-dark rounded-3">
-                    <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
-                </div>
-            </div>
-        }
-    </div>
-</div>
 
 <div class="container">
     <!-- Go to Top Button -->

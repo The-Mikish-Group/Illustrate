@@ -52,9 +52,9 @@ body {
         text-decoration: none !important;
     }
 
-    #image-containers div:hover .filename {
-        color: green !important;
-    }
+        #image-containers div:hover .filename {
+            color: green !important;
+        }
 
 img {
     cursor: pointer;

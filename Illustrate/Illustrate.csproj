@@ -31,8 +31,6 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\BCController.cs" />
-    <Compile Remove="Controllers\GalleryController.cs" />
-    <Compile Remove="Controllers\HomeController.cs" />
     <Compile Remove="Controllers\LaserController.cs" />
     <Compile Remove="Controllers\MVController.cs" />
   </ItemGroup>
