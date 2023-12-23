@@ -1,5 +1,4 @@
-﻿@{
-    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+﻿@{   
     Func<string, string, string> IsLinkSelected = (controller, action) =>
     {
         var url = Url.Action(action, controller);
@@ -10,20 +9,18 @@
 
     // Organization variables
     string site_Name = "The Mikish Group";
-    string siteName = "Illustrate";    
+    string siteName = "Illustrate";
+    string description = "Enjoying Life!";    
     string siteURL = "https://illustrate.net";
+
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+    string title = currentController + " - " + siteName;    
+
     string pageShareFolder = siteURL + "/PageShares/";
-    string pageShareImage = "BlueSun-ps.png";
     string pageShareImageHeight = "1200";
     string pageShareImageWidth = "1200";
-    string title = currentController + " - " + siteName;
-    string description = "Enjoying Life!";
-    string canonical = siteURL + "/" + currentController;
-    string image = pageShareFolder + pageShareImage;
-    string ImageWidth = pageShareImageWidth;
-    string ImageHeight = pageShareImageHeight;
-    string viewName = ViewData["ViewName"]?.ToString() ?? "Index";
 
+    string pageShareImage = "BlueSun-ps.png";
     if (currentController == "AP")
     {
         pageShareImage = "AP-ps.png";
@@ -32,6 +29,12 @@
     {
         pageShareImage = "BC-ps.jpg";
     }
+
+    string image = pageShareFolder + pageShareImage;
+    string imageWidth = pageShareImageWidth;
+    string imageHeight = pageShareImageHeight;
+    string canonical = siteURL + "/" + currentController;
+    string viewName = ViewData["ViewName"]?.ToString() ?? "Index";
 }
 
 <!DOCTYPE html>
@@ -64,21 +67,21 @@
     <meta property="og:image:secure_url" content="@image" />
     <meta property="og:image:alt" content="Share Image" />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="@ImageWidth" />
-    <meta property="og:image:height" content="@ImageHeight" />
+    <meta property="og:image:width" content="@imageWidth" />
+    <meta property="og:image:height" content="@imageHeight" />
 
-    <!-- Twitter Link Share Setup -->
+    <!-- X (formerly "Twitter") Link Share Setup -->
     <!-- (more info here: https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup) -->
     <meta name="twitter:card" content="photo" />
     <meta name="twitter:title" content="@title" />
     <meta name="twitter:image" content="@image" />
-    <meta name="twitter:image:width" content="@ImageWidth" />
-    <meta name="twitter:image:height" content="@ImageHeight" />
+    <meta name="twitter:image:width" content="@imageWidth" />
+    <meta name="twitter:image:height" content="@imageHeight" />
 
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="23ZjV4j9CxM5SWQXeC7pB-ylHq3qhcPpyoncr5A7GnA" />
 
-    <!-- FavIcon(s) -->
+    <!-- favIcon(s) -->
     <link rel="apple-touch-icon" sizes="180x180" href="~/icons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="~/icons/favicon-16x16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="~/icons/favicon-32x32.png" />
@@ -89,7 +92,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- My Site.js -->
+    <!-- Site.js -->
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
@@ -129,7 +132,6 @@
                         <li class="nav-item">
                             <a class="nav-link menu-link @(IsLinkSelected("Home", "TOS"))" asp-area="" asp-controller="Home" asp-action="TOS">TOS</a>
                         </li>
-
                     </ul>
                 </div>
             </div>

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Illustrate.Models;
 using System.Diagnostics;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Illustrate.Controllers
 {
@@ -10,8 +13,9 @@ namespace Illustrate.Controllers
         {
             ViewData["ViewName"] = viewName;
             return View();
+            }
         }
-    }
+
     public class GalleriesController : BaseController
     {
         public IActionResult Index() => View("Galleries");
@@ -40,8 +44,4 @@ namespace Illustrate.Controllers
         public IActionResult Index() => GalleryView();
         public IActionResult Gallery(string viewName) => GalleryView(viewName);
     }
-
-
-    
-
 }
