@@ -1,4 +1,5 @@
 ﻿@{
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
     Func<string, string, string> IsLinkSelected = (controller, action) =>
     {
         var url = Url.Action(action, controller);
@@ -15,18 +16,30 @@
     string pageShareImage = "BlueSun-ps.png";
     string pageShareImageHeight = "1200";
     string pageShareImageWidth = "1200";
-    string title = "@ViewData['ViewName']" + " - " + siteName; ;
-    string description = "Enjoying Life!";  
-    string canonical = siteURL;
+    string title = currentController + " - " + siteName;
+    string description = "Enjoying Life!";
+    string canonical = siteURL + "/" + currentController;
     string image = pageShareFolder + pageShareImage;
     string ImageWidth = pageShareImageWidth;
     string ImageHeight = pageShareImageHeight;
+    string viewName = ViewData["ViewName"]?.ToString() ?? "Index";
 
+    if (currentController == "AP")
+    {
+        pageShareImage = "AP-ps.png";
+    }
+    if (currentController == "BC")
+    {
+        pageShareImage = "BC-ps.jpg";
+    }
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <title>@viewName - @siteName</title>
+
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,18 +47,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="@description" />
     <link rel="canonical" href="@canonical" />
-
-    <title>@ViewData["ViewName"] - Illustrate Net</title>
         
     <!-- Default FB App ID unused -->
     <meta property="fb:app_id" content="966242223397117" />
+
+    <!-- Link Sharing stuff -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="@title;" />
     <meta property="og:determiner" content="The" />
     <meta property="og:description" content="@description" />
     <meta property="og:site_name" content="@site_Name" />
-    <meta property="og:url" content="@siteURL" />
+    <meta property="og:url" content="@siteURL + '/' + currentController;" />
     <meta property="og:image" content="@image" />
     <meta property="og:image:url" content="@image" />
     <meta property="og:image:secure_url" content="@image" />
@@ -77,10 +90,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- My Site.js -->
-    @* <script async defer src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
 
     <!-- Site Style CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />

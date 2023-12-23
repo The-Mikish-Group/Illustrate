@@ -1,24 +1,10 @@
-﻿<!-- Folders Menu -->
-<partial name="_Menu" />
-@{
-    // Filter on all files initially
+﻿@{  
     var filter = "*.*";
-
     string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
-
-    // viewName will be the name of one of the folders imageFolder
     var viewName = ViewData["ViewName"]?.ToString() ?? currentAction;
-
-    // Controller and Folder to read
     string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
-
-    // The file content path
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", currentAction, currentController);
-
-    // Retrieve all files
     var allFiles = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter);
-
-    // Filter only *.png and *.jpg files
     var files = allFiles
         .Where(file => System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
                        System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase))
@@ -26,31 +12,20 @@
         .ToList();
 }
 
+
+<partial name="GalleryMenu" />
+
 <div class="container">
-    <!-- Go to Top Button -->
     <button type="button" onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-    
-    <!-- Heading -->
     <div class="text-center mt-3">
         <h2>@viewName</h2>
     </div>
-
-    <!-- "images-container" (rows of image files) -->
     <div id="images-container" class="row g-0 g-lg-4">
-
-        <!-- Loop through image files -->
         @foreach (var file in files)
         {
-            <!-- Display the image file in a row column -->
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
-
-                <!-- A link to a full-screen image window -->
                 <a class="d-block text-center text-decoration-none" href="@Url.Content(file)" target="_blank" title="Full Screen">
-
-                    <!-- Image to display (this actually displays the image in the row column -->
                     <img class="menu-link w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
-
-                    <!-- Show the image's name -->
                     <div class="text-black text-center">
                         @System.IO.Path.GetFileNameWithoutExtension(file)
                     </div>
@@ -61,9 +36,7 @@
 </div>
 
 <script>
-
     hideCurrentMenuSelection('@viewName');
-
     function hideCurrentMenuSelection(viewName) {
         var elements = document.querySelectorAll('.menu-item');
         elements.forEach(function (element) {
@@ -74,5 +47,4 @@
             }
         });
     }
-
 </script>

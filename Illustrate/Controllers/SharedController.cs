@@ -11,7 +11,11 @@ namespace Illustrate.Controllers
             ViewData["ViewName"] = viewName;
             return View();
         }
-    }   
+    }
+    public class GalleriesController : BaseController
+    {
+        public IActionResult Index() => View("Galleries");
+    }
 
     public class APController : BaseController
     {
@@ -37,8 +41,7 @@ namespace Illustrate.Controllers
         public IActionResult Gallery(string viewName) => GalleryView(viewName);
     }
 
-    public class GalleriesController : BaseController
-    {
-        public IActionResult Index() => View("Galleries");
-    }
+
+    
+
 }

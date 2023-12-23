@@ -1,19 +1,13 @@
 ﻿@{
-    // Controller and Folder to read
-    var GalleryFolder = "";   
-
-    // Read the folder names in the folder location
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Gallery/{0}", GalleryFolder)))
+   var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Gallery/{0}", "")))
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
 }
 
-<!-- Heading -->
 <div class="text-center mt-3">
     <h2>@ViewData["ViewName"]</h2>
 </div>
 
-<!-- Folders Menu -->
 <div class="container text-center">
     <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
         @foreach (var folder in folders)
@@ -24,6 +18,5 @@
                 </div>
             </div>
         }
-
     </div>
 </div>
