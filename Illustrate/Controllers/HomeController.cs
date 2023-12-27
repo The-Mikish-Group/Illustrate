@@ -4,17 +4,14 @@ using System.Diagnostics;
 
 namespace Illustrate.Controllers
 {
-    public class BaseHomeController : Controller
+    public class HomeController : Controller
     {
         protected IActionResult CustomView(string viewName)
         {
             ViewData["ViewName"] = viewName;
             return View();
         }
-    }
 
-    public class HomeController : BaseHomeController
-    {
         public IActionResult Index() => CustomView("Home");
         public IActionResult Contact() => CustomView("Contact");
         public IActionResult Privacy() => CustomView("Privacy");

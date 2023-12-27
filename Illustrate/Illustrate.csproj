@@ -46,10 +46,12 @@
     <Content Remove="Views\Shared\_Gallery.cshtml" />
     <Content Remove="Views\Shared\_ImagesMenu.cshtml" />
     <Content Remove="Views\Shared\_Index.cshtml" />
-    <Content Remove="wwwroot\Gallery\AP\Avon Park Gallery A\001.jpg" />
+    <Content Remove="wwwroot\Gallery\AP\Avon Park Gallery A\The Gang.jpg" />
     <Content Remove="wwwroot\Gallery\AP\Avon Park Gallery B\Our Church.jpg" />
     <Content Remove="wwwroot\Gallery\AP\Avon Park Gallery B\Pastor Patty.jpg" />
-    <Content Remove="wwwroot\Gallery\AP\Avon Park Gallery C\001.jpg" />
+    <Content Remove="wwwroot\Gallery\AP\Avon Park Gallery C\Service.jpg" />
+    <Content Remove="wwwroot\Gallery\AP\background.jpg" />
+    <Content Remove="wwwroot\Gallery\BC\background.jpg" />
     <Content Remove="wwwroot\Gallery\BC\Coastal Office\Mr Carta.jpg" />
     <Content Remove="wwwroot\Gallery\BC\Coastal Office\Office View 1.jpg" />
     <Content Remove="wwwroot\Gallery\BC\Coastal Office\Office View 2.jpg" />
@@ -98,54 +100,19 @@
 
   <ItemGroup>
     <None Include="Views\Shared\Galleries.cshtml" />
-    <None Include="wwwroot\Gallery\AP\Avon Park Gallery A\001.jpg" />
+    <None Include="wwwroot\Gallery\AP\Avon Park Gallery A\The Gang.jpg" />
     <None Include="wwwroot\Gallery\AP\Avon Park Gallery B\Our Church.jpg" />
     <None Include="wwwroot\Gallery\AP\Avon Park Gallery B\Pastor Patty.jpg" />
-    <None Include="wwwroot\Gallery\AP\Avon Park Gallery C\001.jpg" />
+    <None Include="wwwroot\Gallery\AP\Avon Park Gallery C\Service.jpg" />
+    <None Include="wwwroot\Gallery\AP\background.jpg" />
     <None Include="wwwroot\Gallery\BC\Coastal Office\Mr Carta.jpg" />
     <None Include="wwwroot\Gallery\BC\Coastal Office\Office View 1.jpg" />
     <None Include="wwwroot\Gallery\BC\Coastal Office\Office View 2.jpg" />
     <None Include="wwwroot\Gallery\BC\Mountain Office\Mountain Office 1.jpg" />
     <None Include="wwwroot\Gallery\BC\Mountain Office\Mountain Office 2.jpg" />
     <None Include="wwwroot\Gallery\BC\Mountain Office\Mr Carta.jpg" />
-    <None Include="wwwroot\Gallery\MV\Cartoons\000000.png" />
-    <None Include="wwwroot\Gallery\MV\Fishing\000001.png" />
+    <None Include="wwwroot\Gallery\BC\background.jpg" />
     <None Include="wwwroot\Gallery\MV\Memes\Tonight.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000001.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000002.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000003.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000004.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000005.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000006.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000007.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000008.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000009.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000010.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000011.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000012.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000013.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000014.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000015.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000016.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000017.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000018.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000019.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000020.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000021.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000022.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000023.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000024.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000025.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000026.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000027.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000028.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000029.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000030.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000031.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000032.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000033.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000034.png" />
-    <None Include="wwwroot\Gallery\MV\Sunsets\000035.png" />
   </ItemGroup>
 
   <ItemGroup>

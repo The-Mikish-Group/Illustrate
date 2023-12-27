@@ -10,6 +10,8 @@
                        System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase))
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
         .ToList();
+
+    string backgroundImage = $"../gallery/{currentController}/background.webp";
 }
 
 <partial name="GalleryMenu" />
@@ -46,4 +48,8 @@
             }
         });
     }
+</script>
+
+<script>
+    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
 </script>

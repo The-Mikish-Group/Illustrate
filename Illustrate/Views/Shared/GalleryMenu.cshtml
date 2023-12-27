@@ -10,7 +10,7 @@
         @foreach (var folder in folders)
         {
             <div class="col menu-item" data-viewName="@folder">
-                <div class="bg-light text-center p-0 border border border-dark rounded-3">
+                <div class="bg-light text-center p-0 border border border-dark rounded">
                     <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
                 </div>
             </div>

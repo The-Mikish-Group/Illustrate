@@ -6,6 +6,9 @@ body {
     margin: 0;
     font-size: 14px;
     font-weight: 400;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     text-rendering: optimizeLegibility;
 }
 
@@ -62,7 +65,17 @@ img {
 }
 
 .menu-item {
-    width: 200px;
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nav-item {
+    width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .menu-link {

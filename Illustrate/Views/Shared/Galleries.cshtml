@@ -1,11 +1,13 @@
 ﻿@{
-   var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), string.Format("wwwroot/Gallery/{0}", "")))
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Gallery", ""))
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
+
+    string backgroundImage = $"../gallery/background.webp";
 }
 
 <div class="text-center mt-3">
-    <h2>@ViewData["ViewName"]</h2>
+    <h2 class="text-white">Galleries</h2>
 </div>
 
 <div class="container text-center">
@@ -13,10 +15,14 @@
         @foreach (var folder in folders)
         {
             <div class="col menu-item" data-viewName="@folder">
-                <div class="bg-light text-center p-0 border border border-dark rounded-3">
+                <div class="bg-light text-center p-0 border border border-dark rounded">
                     <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@folder">@folder</a>
                 </div>
             </div>
         }
     </div>
 </div>
+
+<script>
+    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
+</script>
