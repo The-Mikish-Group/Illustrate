@@ -3,7 +3,22 @@
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
 
-    string backgroundImage = $"../gallery/background.webp";
+    string backgroundImage_default = $"../gallery/background-default.webp";
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+    string backgroundImage = null;
+    foreach (var extension in imageExtensions)
+    {
+        var imagePath = $"gallery/background{extension}";
+        if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
+        {
+            backgroundImage = imagePath;
+            break;
+        }
+    }    
+    if (backgroundImage == null)
+    {
+        backgroundImage = backgroundImage_default;
+    }
 }
 
 <div class="text-center mt-3">
@@ -26,3 +41,4 @@
 <script>
     $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
 </script>
+

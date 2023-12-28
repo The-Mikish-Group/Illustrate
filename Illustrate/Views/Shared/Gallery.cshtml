@@ -12,9 +12,24 @@
              System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
              System.IO.Path.GetExtension(file).Equals(".webp", StringComparison.OrdinalIgnoreCase)))
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
-        .ToList();
+        .ToList();    
 
-    string backgroundImage = $"../gallery/{currentController}/{viewName}/background.webp";
+    string backgroundImage_default = $"../gallery/background-default.webp";
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+    string backgroundImage = null;
+    foreach (var extension in imageExtensions)
+    {
+        var imagePath = $"gallery/{currentController}/{viewName}/background{extension}";
+        if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
+        {
+            backgroundImage = imagePath;
+            break;
+        }
+    }
+    if (backgroundImage == null)
+    {
+        backgroundImage = backgroundImage_default;
+    }
 }
 
 <partial name="GalleryMenu" />
@@ -33,12 +48,13 @@
                 </a>
             </div>
         }
-    </div>        
+    </div>
 </div>
 
-<script>    
-    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
+<script>
+    $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>
+
 
 @* <script>
     hideCurrentMenuSelection('@viewName');

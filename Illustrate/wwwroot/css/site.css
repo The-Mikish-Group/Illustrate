@@ -93,7 +93,6 @@ img {
         font-weight: bold !important;
     }
 
-    .menu-link.selected {
-        /*border-color: transparent !important;*/
+    .menu-link.selected {        
         font-weight: bold !important;
     }

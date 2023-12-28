@@ -13,7 +13,7 @@
         {
             <div  class="col menu-item" data-viewName="@folder">
                 <div id="@folder" class="bg-light text-center p-0 border border-dark rounded">
-                    <a id="@folder'1'" style="text-decoration: none;" class="menu-link text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+                    <a id="@folder 2" class="menu-link text-dark w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
                 </div>
             </div>
         }
@@ -21,14 +21,12 @@
 </div>
 
 <script>
-    if (document.getElementById("@viewName").classList.contains("bg-light")) {
-        document.getElementById("@viewName").classList.remove("bg-light");
-        document.getElementById("@viewName").classList.add("bg-dark");
-    };
+    var mainElement = document.getElementById("@viewName");
+    var secondaryElement = document.getElementById("@viewName 2");
 
-    if (document.getElementById("@viewName'1'").classList.contains("text-black")) {
-        document.getElementById("@viewName'1'").classList.remove("text-black");
-        document.getElementById("@viewName'1'").classList.add("text-light");
-    };
+    mainElement.classList.toggle("bg-light");
+    mainElement.classList.toggle("bg-dark");
 
+    secondaryElement.classList.toggle("text-dark");
+    secondaryElement.classList.toggle("text-light");
 </script>

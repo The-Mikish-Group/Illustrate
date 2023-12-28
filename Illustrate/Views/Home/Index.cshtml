@@ -1,6 +1,24 @@
 ﻿@{
     ViewBag.Title = ViewData["ViewName"];
     var siteName = "Illustrate";
+
+    string backgroundImage_HomeDefault = $"../gallery/background-home-default.webp";
+    
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+    string backgroundImage = null;
+    foreach (var extension in imageExtensions)
+    {
+        var imagePath = $"gallery/background-home{extension}";
+        if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
+        {
+            backgroundImage = imagePath;
+            break;
+        }
+    }    
+    if (backgroundImage == null)
+    {
+        backgroundImage = backgroundImage_HomeDefault;
+    }
 }
 
 <div class="bg-transparent mb-3">
@@ -8,5 +26,5 @@
 </div>
 
 <script>
-    $("body").css("background-image", "url('../gallery/background.webp')");
+    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
 </script>

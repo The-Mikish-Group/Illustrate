@@ -1,10 +1,9 @@
 ﻿@{
     string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";   
-    
     string[] imageExtensions = { ".webp", ".png", ".jpg" };
     string backgroundImage = null;
-    // string backgroundImage = $"../gallery/{currentController}/background.webp";
-
+    string backgroundImage_default = $"../gallery/background.webp";
+    
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/{currentController}/background{extension}";
@@ -15,10 +14,9 @@
         }
     }
 
-    // If none of the extensions are found, set a default background image
     if (backgroundImage == null)
     {
-        backgroundImage = "../gallery/background.webp"; 
+        backgroundImage = "../gallery/background_default.webp"; 
     }
 }
 
@@ -29,5 +27,6 @@
 <partial name="GalleryMenu" />
 
 <script>
-    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
+    $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>
+
