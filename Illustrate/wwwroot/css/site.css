@@ -68,7 +68,7 @@ img {
     width: 180px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;   
 }
 
 .nav-item {
@@ -78,7 +78,7 @@ img {
     text-overflow: ellipsis;
 }
 
-.menu-link {
+.menu-link {    
     text-decoration: none;
     border: 2px solid transparent;
     border-radius: 5px;
@@ -94,6 +94,6 @@ img {
     }
 
     .menu-link.selected {
-        border-color: transparent !important;
+        /*border-color: transparent !important;*/
         font-weight: bold !important;
     }

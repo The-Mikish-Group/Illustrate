@@ -1,4 +1,4 @@
-﻿@{  
+﻿@{
     var filter = "*.*";
     string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
     var viewName = ViewData["ViewName"]?.ToString() ?? currentAction;
@@ -6,28 +6,28 @@
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", currentAction, currentController);
     var allFiles = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter);
     var files = allFiles
-        .Where(file => System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
-                       System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase))
+        .Where(file =>
+            !System.IO.Path.GetFileName(file).StartsWith("background", StringComparison.OrdinalIgnoreCase) &&
+            (System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
+             System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+             System.IO.Path.GetExtension(file).Equals(".webp", StringComparison.OrdinalIgnoreCase)))
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
         .ToList();
 
-    string backgroundImage = $"../gallery/{currentController}/background.webp";
+    string backgroundImage = $"../gallery/{currentController}/{viewName}/background.webp";
 }
 
 <partial name="GalleryMenu" />
 
 <div class="container">
     <button type="button" onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-    <div class="text-center mt-3">
-        <h2>@viewName</h2>
-    </div>
     <div id="images-container" class="row g-0 g-lg-4">
         @foreach (var file in files)
         {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
-                <a class="d-block text-center text-decoration-none" href="@Url.Content(file)" target="_blank" title="Full Screen">
-                    <img class="menu-link w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
-                    <div class="text-black text-center">
+                <a id="@System.IO.Path.GetFileNameWithoutExtension(file)" class="menu-link d-block text-center text-decoration-none bg-white" href="@Url.Content(file)" target="_blank" title="Full Screen">
+                    <img class="w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
+                    <div class="text-black text-center pt-1">
                         @System.IO.Path.GetFileNameWithoutExtension(file)
                     </div>
                 </a>
@@ -36,20 +36,24 @@
     </div>        
 </div>
 
-<script>
+<script>    
+    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
+</script>
+
+@* <script>
     hideCurrentMenuSelection('@viewName');
+
     function hideCurrentMenuSelection(viewName) {
         var elements = document.querySelectorAll('.menu-item');
         elements.forEach(function (element) {
             if (element.getAttribute('data-viewName') === viewName) {
                 element.style.display = 'none';
+
             } else {
                 element.style.display = '';
+
             }
         });
     }
-</script>
+</script> *@
 
-<script>
-    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
-</script>

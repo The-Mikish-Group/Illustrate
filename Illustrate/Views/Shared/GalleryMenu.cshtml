@@ -3,17 +3,32 @@
     var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/Gallery/{currentController}"))
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
+
+    var viewName = ViewData["ViewName"]?.ToString() ;
 }
 
 <div class="container text-center">
     <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
         @foreach (var folder in folders)
         {
-            <div class="col menu-item" data-viewName="@folder">
-                <div class="bg-light text-center p-0 border border border-dark rounded">
-                    <a style="text-decoration: none;" class="menu-link bg-light text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+            <div  class="col menu-item" data-viewName="@folder">
+                <div id="@folder" class="bg-light text-center p-0 border border-dark rounded">
+                    <a id="@folder'1'" style="text-decoration: none;" class="menu-link text-black w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
                 </div>
             </div>
         }
     </div>
 </div>
+
+<script>
+    if (document.getElementById("@viewName").classList.contains("bg-light")) {
+        document.getElementById("@viewName").classList.remove("bg-light");
+        document.getElementById("@viewName").classList.add("bg-dark");
+    };
+
+    if (document.getElementById("@viewName'1'").classList.contains("text-black")) {
+        document.getElementById("@viewName'1'").classList.remove("text-black");
+        document.getElementById("@viewName'1'").classList.add("text-light");
+    };
+
+</script>
