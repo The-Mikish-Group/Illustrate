@@ -1,9 +1,24 @@
-﻿@{
+﻿@{   
     ViewBag.Title = ViewData["ViewName"];
+
+    string backgroundImage = "gallery/bakground.webp";
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };    
+    foreach (var extension in imageExtensions)
+    {
+        var imagePath = $"gallery/background-home{extension}";
+        if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
+        {
+            backgroundImage = imagePath;
+            break;
+        }
+    } 
 }
 
-<h3 class="text-center">@ViewBag.Title</h3>
+<h3 class="text-center text-light">@ViewBag.Title</h3>
 
-<p class="fs-3 text-dark text-bold text-center">The Mikish Group</p>
-<p class="fs-5 text-dark text-bold text-center">mikish@mikish.com</p>
+<p class="fs-3 text-light text-bold text-center">The Mikish Group</p>
+<p class="fs-5 text-light text-bold text-center">mikish@mikish.com</p>
 
+<script>
+    $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
+</script>

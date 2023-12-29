@@ -81,15 +81,15 @@ img {
 .menu-link {    
     text-decoration: none;
     border: 2px solid transparent;
-    border-radius: 5px;
+    border-radius: 4px;
     transition: color 0.3s ease, border-color 0.3s ease, font-weight 0.3s ease;
     padding: 8px;
-    display: inline-block; /* Ensure each menu item is on a new line */
-    text-align: center; /* Center the text within the fixed width */
+    display: inline-block; 
+    text-align: center; 
 }
 
     .menu-link:hover {
-        border-color: greenyellow !important;
+        border-color: Black !important;
         font-weight: bold !important;
     }
 

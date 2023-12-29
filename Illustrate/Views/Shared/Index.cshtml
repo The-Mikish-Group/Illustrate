@@ -1,9 +1,8 @@
 ﻿@{
-    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";   
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
-    string backgroundImage = null;
-    string backgroundImage_default = $"../gallery/background.webp";
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
     
+    string backgroundImage = "gallery/bakground.webp";
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };      
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/{currentController}/background{extension}";
@@ -12,12 +11,7 @@
             backgroundImage = imagePath;
             break;
         }
-    }
-
-    if (backgroundImage == null)
-    {
-        backgroundImage = "../gallery/background_default.webp"; 
-    }
+    }    
 }
 
 <h2 class="text-center">

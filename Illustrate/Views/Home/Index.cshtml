@@ -2,10 +2,8 @@
     ViewBag.Title = ViewData["ViewName"];
     var siteName = "Illustrate";
 
-    string backgroundImage_HomeDefault = $"../gallery/background-home-default.webp";
-    
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
-    string backgroundImage = null;
+    string backgroundImage = "gallery/bakground.webp";
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };    
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/background-home{extension}";
@@ -14,11 +12,7 @@
             backgroundImage = imagePath;
             break;
         }
-    }    
-    if (backgroundImage == null)
-    {
-        backgroundImage = backgroundImage_HomeDefault;
-    }
+    } 
 }
 
 <div class="bg-transparent mb-3">

@@ -12,11 +12,10 @@
              System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
              System.IO.Path.GetExtension(file).Equals(".webp", StringComparison.OrdinalIgnoreCase)))
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
-        .ToList();    
-
-    string backgroundImage_default = $"../gallery/background-default.webp";
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
-    string backgroundImage = null;
+        .ToList(); 
+        
+    string backgroundImage = "gallery/bakground.webp";
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };    
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/{currentController}/{viewName}/background{extension}";
@@ -25,11 +24,7 @@
             backgroundImage = imagePath;
             break;
         }
-    }
-    if (backgroundImage == null)
-    {
-        backgroundImage = backgroundImage_default;
-    }
+    }    
 }
 
 <partial name="GalleryMenu" />
@@ -40,7 +35,7 @@
         @foreach (var file in files)
         {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
-                <a id="@System.IO.Path.GetFileNameWithoutExtension(file)" class="menu-link d-block text-center text-decoration-none bg-white" href="@Url.Content(file)" target="_blank" title="Full Screen">
+                <a id="@System.IO.Path.GetFileNameWithoutExtension(file)" class="menu-link d-block text-center text-decoration-none bg-white" href="@Url.Content(file)" target="_blank" title="Full-Screen">
                     <img class="w-100 img-fluid mx-auto" data-src="@Url.Content(file)" alt="" />
                     <div class="text-black text-center pt-1">
                         @System.IO.Path.GetFileNameWithoutExtension(file)

@@ -15,18 +15,22 @@
     <Compile Remove="Views\BC\**" />
     <Compile Remove="Views\Laser\**" />
     <Compile Remove="Views\MV\**" />
+    <Compile Remove="wwwroot\Gallery\MJR\**" />
     <Content Remove="Views\AP\**" />
     <Content Remove="Views\BC\**" />
     <Content Remove="Views\Laser\**" />
     <Content Remove="Views\MV\**" />
+    <Content Remove="wwwroot\Gallery\MJR\**" />
     <EmbeddedResource Remove="Views\AP\**" />
     <EmbeddedResource Remove="Views\BC\**" />
     <EmbeddedResource Remove="Views\Laser\**" />
     <EmbeddedResource Remove="Views\MV\**" />
+    <EmbeddedResource Remove="wwwroot\Gallery\MJR\**" />
     <None Remove="Views\AP\**" />
     <None Remove="Views\BC\**" />
     <None Remove="Views\Laser\**" />
     <None Remove="Views\MV\**" />
+    <None Remove="wwwroot\Gallery\MJR\**" />
   </ItemGroup>
 
   <ItemGroup>

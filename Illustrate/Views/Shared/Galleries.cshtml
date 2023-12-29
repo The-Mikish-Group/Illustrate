@@ -3,9 +3,8 @@
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
 
-    string backgroundImage_default = $"../gallery/background-default.webp";
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
-    string backgroundImage = null;
+    string backgroundImage = "../gallery/bakground.webp";
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };    
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/background{extension}";
@@ -15,10 +14,6 @@
             break;
         }
     }    
-    if (backgroundImage == null)
-    {
-        backgroundImage = backgroundImage_default;
-    }
 }
 
 <div class="text-center mt-3">
