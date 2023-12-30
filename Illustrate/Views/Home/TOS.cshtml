@@ -1,13 +1,23 @@
 ﻿@{
     ViewBag.Title = ViewData["ViewName"];
 
-    string backgroundImage = "gallery/bakground.webp";
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };    
+    // The Domain Name
+    string domainName = HttpContextAccessor?.HttpContext?.Request?.Host != null ? HttpContextAccessor.HttpContext.Request.Host.Value.Split('.')[0] : "Site";
+
+    // The background image (defaults to background.webp, but .png and .jpg are also valid extensions)
+    string backgroundImage = "gallery/background-home.webp";
+
+    // Checks to ensure a file named "background" exists with one of the listed extensions and then uses
+    // the first matched filename based on the listing order below to create the correct imagePath string.
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+
+    // Loop through possible extensions
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/background-home{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
         {
+            // There is a Match
             backgroundImage = imagePath;
             break;
         }
@@ -41,20 +51,20 @@
     <ol type="a">
         <li>
             Permission is granted to temporarily download one copy of the materials
-            (information or software) on Illustrate's web site for personal,
+            (information or software) on @domainName's web site for personal,
             non-commercial transitory viewing only. This is the grant of a license,
             not a transfer of title, and under this license you may not:
 
             <ol type="i">
                 <li>modify or copy the materials;</li>
                 <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-                <li>attempt to decompile or reverse engineer any software contained on Illustrate's web site;</li>
+                <li>attempt to decompile or reverse engineer any software contained on @domainName's web site;</li>
                 <li>remove any copyright or other proprietary notations from the materials; or</li>
                 <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
             </ol>
         </li>
         <li>
-            This license shall automatically terminate if you violate any of these restrictions and may be terminated by Illustrate at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
+            This license shall automatically terminate if you violate any of these restrictions and may be terminated by @domainName at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
         </li>
     </ol>
 
@@ -64,7 +74,7 @@
 
     <ol type="a">
         <li>
-            The materials on Illustrate's web site are provided "as is". Illustrate makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, Illustrate does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet web site or otherwise relating to such materials or on any sites linked to this site.
+            The materials on @domainName's web site are provided "as is". @domainName makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, @domainName does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet web site or otherwise relating to such materials or on any sites linked to this site.
         </li>
     </ol>
 
@@ -73,7 +83,7 @@
     </h3>
 
     <p>
-        In no event shall Illustrate or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption,) arising out of the use or inability to use the materials on Illustrate's Internet site, even if Illustrate or a Illustrate authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
+        In no event shall @domainName or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption,) arising out of the use or inability to use the materials on @domainName's Internet site, even if @domainName or a @domainName authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
     </p>
 
     <h3>
@@ -81,7 +91,7 @@
     </h3>
 
     <p>
-        The materials appearing on Illustrate's web site could include technical, typographical, or photographic errors. Illustrate does not warrant that any of the materials on its web site are accurate, complete, or current. Illustrate may make changes to the materials contained on its web site at any time without notice. Illustrate does not, however, make any commitment to update the materials.
+        The materials appearing on @domainName's web site could include technical, typographical, or photographic errors. @domainName does not warrant that any of the materials on its web site are accurate, complete, or current. @domainName may make changes to the materials contained on its web site at any time without notice. @domainName does not, however, make any commitment to update the materials.
     </p>
 
     <h3>
@@ -89,7 +99,7 @@
     </h3>
 
     <p>
-        Illustrate has not reviewed all of the sites linked to its Internet web site and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by Illustrate of the site. Use of any such linked web site is at the user's own risk.
+        @domainName has not reviewed all of the sites linked to its Internet web site and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by @domainName of the site. Use of any such linked web site is at the user's own risk.
     </p>
 
     <h3>
@@ -97,7 +107,7 @@
     </h3>
 
     <p>
-        Illustrate may revise these terms of use for its web site at any time without notice. By using this web site you are agreeing to be bound by the then current version of these Terms and Conditions of Use.
+        @domainName may revise these terms of use for its web site at any time without notice. By using this web site you are agreeing to be bound by the then current version of these Terms and Conditions of Use.
     </p>
 
     <h3>
@@ -105,7 +115,7 @@
     </h3>
 
     <p>
-        Any claim relating to Illustrate's web site shall be governed by the laws of the State of Illinois without regard to its conflict of law provisions.
+        Any claim relating to @domainName's web site shall be governed by the laws of the State of Illinois without regard to its conflict of law provisions.
     </p>
 
     <p>
@@ -113,6 +123,8 @@
     </p>
 </div>
 
+<!-- Replaces the background-image to: "../gallery/background-home.{extension}" where extension
+ is either webp, png, or jpg); no image is shown if file does not exist -->
 <script>
     $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>

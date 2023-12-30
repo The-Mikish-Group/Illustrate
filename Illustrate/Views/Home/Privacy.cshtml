@@ -1,17 +1,24 @@
 ﻿@{
-    ViewBag.Title = ViewData["ViewName"];
+    ViewBag.Title = ViewData["ViewName"];    
 
-    string backgroundImage = "gallery/bakground.webp";
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };    
+    // The background image (defaults to background.webp, but .png and .jpg are also valid extensions)
+    string backgroundImage = "gallery/background-home.webp";
+
+    // Checks to ensure a file named "background-home" exists with one of the listed extensions and then uses
+    // the first matched filename based on the listing order below to create the correct imagePath string.
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+
+    // Loop through possible extensions
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/background-home{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
         {
+            // There is a Match
             backgroundImage = imagePath;
             break;
         }
-    } 
+    }
 }
 
 <div class="bg-white p-4 rounded">
@@ -51,6 +58,8 @@
     </p>
 </div>
 
+<!-- Replaces the background-image to: "../gallery/background-home.{extension}" where extension
+ is either webp, png, or jpg); no image is shown if file does not exist -->
 <script>
     $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>

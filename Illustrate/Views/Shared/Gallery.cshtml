@@ -1,4 +1,5 @@
 ﻿@{
+    // Read the files in the 
     var filter = "*.*";
     string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
     var viewName = ViewData["ViewName"]?.ToString() ?? currentAction;
@@ -14,17 +15,24 @@
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
         .ToList(); 
         
-    string backgroundImage = "gallery/bakground.webp";
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };    
+    // The background image (defaults to background.webp, but .png and .jpg are also valid extensions)
+    string backgroundImage = $"gallery/{currentController}/{viewName}/background.webp";
+
+    // Checks to ensure a file named "background-home" exists with one of the listed extensions and then uses
+    // the first matched filename based on the listing order below to create the correct imagePath string.
+    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+
+    // Loop through possible extensions
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/{currentController}/{viewName}/background{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
         {
+            // There is a Match
             backgroundImage = imagePath;
             break;
         }
-    }    
+    }
 }
 
 <partial name="GalleryMenu" />
@@ -50,8 +58,9 @@
     $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>
 
-
-@* <script>
+    
+@* <!-- Script to hide current selected menu option -->    
+<script>
     hideCurrentMenuSelection('@viewName');
 
     function hideCurrentMenuSelection(viewName) {
