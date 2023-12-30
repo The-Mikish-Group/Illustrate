@@ -1,22 +1,23 @@
-﻿@{
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Gallery", ""))
+﻿<!-- Shared Galleries -->
+@{
+    // Gallery Folder Name (location of gallery = wwwroot/{galleryFolder})
+    string galleryFolder = "gallery";
+
+    var viewName = ViewData["ViewName"]?.ToString();    
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/{galleryFolder}"))
                            .Select(folder => System.IO.Path.GetFileName(folder))
                            .ToList();
-
-    // The background image (defaults to background.webp, but .png and .jpg are also valid extensions)
-    string backgroundImage = "gallery/background.webp";
-
-    // Checks to ensure a file named "background-home" exists with one of the listed extensions and then uses
-    // the first matched filename based on the listing order below to create the correct imagePath string.
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+    
+    // Get the backgroundImage path
+    string backgroundImage = $"{galleryFolder}/background.webp"; // default
+    string[] imageExtensions = { ".jpg", ".png", ".webp" }; // possible extensions
 
     // Loop through possible extensions
     foreach (var extension in imageExtensions)
     {
-        var imagePath = $"gallery/background{extension}";
+        var imagePath = $"{galleryFolder}/background{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
         {
-            // There is a Match
             backgroundImage = imagePath;
             break;
         }
@@ -24,11 +25,12 @@
 }
 
 <div class="text-center mt-3">
-    <h2 class="text-white">Galleries</h2>
+    <h2 class="text-white">@viewName</h2>
 </div>
 
 <div class="container text-center">
     <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
+       
         @foreach (var folder in folders)
         {
             <div class="col menu-item" data-viewName="@folder">
@@ -40,9 +42,8 @@
     </div>
 </div>
 
-<!-- Replaces the background-image to: "../gallery/background.{extension}" where extension
- is either webp, png, or jpg); no image is shown if file does not exist -->
+<!-- Replaces the background-image -->
 <script>
-    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
+    $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>
 

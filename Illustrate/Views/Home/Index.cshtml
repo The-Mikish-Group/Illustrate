@@ -1,22 +1,22 @@
 ﻿<!-- Home Index.cshtml -->
-@{
-    // The Domain Name
-    string domainName = HttpContextAccessor?.HttpContext?.Request?.Host != null ? HttpContextAccessor.HttpContext.Request.Host.Value.Split('.')[0] : "Site";
+@{    
+    // Gallery Folder Name (location of gallery = wwwroot/{galleryFolder})
+    string galleryFolder = "gallery"; 
 
-    // The background image (defaults to background.webp, but .png and .jpg are also valid extensions)
-    string backgroundImage = "gallery/background-home.webp"; 
+    // Site Name
+    string siteName = HttpContextAccessor?.HttpContext?.Request?.Host != null
+    ? System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(HttpContextAccessor.HttpContext.Request.Host.ToString().Split('.')[0])
+    : "Site";
 
-    // Checks to ensure a file named "background" exists with one of the listed extensions and then uses 
-    // the first matched filename based on the listing order below to create the correct imagePath string.
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+    string backgroundImage = $"gallery/background-home.webp"; // default
+    string[] imageExtensions = { ".jpg", ".png", ".webp" };
 
     // Loop through possible extensions
     foreach (var extension in imageExtensions)
     {
-        var imagePath = $"gallery/background-home{extension}";
+        var imagePath = $"{galleryFolder}/background-home{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
-        {
-            // There is a Match
+        {            
             backgroundImage = imagePath;
             break;
         }
@@ -26,20 +26,19 @@
 <!-- View Heading -->
 <div class="bg-transparent mb-3">
     <p class="text-light text-center fs-3">
-        <span class="text-nowrap">@domainName is a Website,</span> 
+        <span class="text-nowrap">@siteName is a Website,</span> 
         <span class="text-nowrap">Subdomain, and Subsite</span> 
         <span class="text-nowrap">Host and Developer</span> 
         <span class="text-nowrap">for a number of great sites.</span>
     </p>
 </div>
 
-<container>
-    <!-- Index View Content Here -->
+<container id="HomeContent">
+    <!-- Add View Content Here if desired -->
 </container>
 
-<!-- Replaces the background-image to: "../gallery/background-home.{extension}" where extension
- is either webp, png, or jpg); no image is shown if file does not exist -->
+<!-- Replaces the background-image -->
 <script>
-    $("body").css("background-image", "url('@Url.Content(backgroundImage)')");
+    $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>
 

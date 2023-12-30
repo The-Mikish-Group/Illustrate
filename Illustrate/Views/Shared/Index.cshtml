@@ -1,39 +1,67 @@
 ﻿<!-- Shared Index -->
 @{
-    ViewBag.Title = ViewData["ViewName"];
+    var viewName = ViewData["ViewName"]?.ToString();
 
-    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
-    
-    // The background image (defaults to background.webp, but .png and .jpg are also valid extensions)
-    string backgroundImage = $"gallery/{currentController}/background.webp";
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Shared";
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/Gallery/{currentController}"))
+                           .Select(folder => System.IO.Path.GetFileName(folder))
+                           .ToList();
 
-    // Checks to ensure a file named "background" exists with one of the listed extensions and then uses
-    // the first matched filename based on the listing order below to create the correct imagePath string.
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+    string backgroundImage = $"gallery/{currentController}/background.webp"; // default
+    string[] imageExtensions = { ".jpg", ".png", ".webp" }; // possible extensions
 
     // Loop through possible extensions
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/{currentController}/background{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
-        {
-            // There is a Match
+        {            
             backgroundImage = imagePath;
             break;
         }
     }
 }
 
-<h2 class="text-center">
-    @currentController Galleries
-</h2>
+<div class="text-center mt-3">
+    <h2 class="text-white">
+        @currentController
+    </h2>
+</div>
 
-<partial name="GalleryMenu" />
+<div class="container text-center">
+    <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
 
+        <div class="col menu-item">
+            <div class="bg-danger text-center p-0 border border border-dark rounded">
+                <a class="menu-link text-dark w-100" asp-area="" asp-controller="Galleries" asp-action="Index">Back</a>
+            </div>
+        </div>
 
-<!-- Replaces the background-image to: "../gallery/{currentController}/background.{extension}" where extension
- is either webp, png, or jpg); no image is shown if file does not exist -->
+        @foreach (var folder in folders)
+        {
+            <div class="col menu-item" data-viewName="@folder">
+                <div id="@folder" class="bg-light text-center p-0 border border-dark rounded">
+                    <a id="@folder link" class="menu-link text-dark w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Replaces the background-image -->
 <script>
     $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>
 
+<!-- Toggle the Current Menu Button to indicate it is selected -->
+<script>
+    var mainElement = document.getElementById("@viewName");
+    var secondaryElement = document.getElementById("@viewName link");
+
+    mainElement.classList.toggle("bg-light");
+    mainElement.classList.toggle("bg-success");
+
+    secondaryElement.classList.toggle("text-dark");
+    secondaryElement.classList.toggle("text-light");
+
+</script>

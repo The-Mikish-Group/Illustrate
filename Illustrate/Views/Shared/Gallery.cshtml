@@ -1,10 +1,17 @@
-﻿@{
-    // Read the files in the 
-    var filter = "*.*";
+﻿<!-- Shared Gallery.cshtml -->
+@{
+    string galleryFolder = "gallery"; // Gallery Folder Name (location of gallery = wwwroot/{galleryFolder})
+        
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Shared";
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/{galleryFolder}/{currentController}"))
+                           .Select(folder => System.IO.Path.GetFileName(folder))
+                           .ToList();
+    
     string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
-    var viewName = ViewData["ViewName"]?.ToString() ?? currentAction;
-    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
     var contentPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", currentAction, currentController);
+    var viewName = ViewData["ViewName"]?.ToString() ?? currentAction;
+    var filter = "*.*";
+
     var allFiles = Directory.GetFiles(System.IO.Path.Combine(contentPath, viewName), filter);
     var files = allFiles
         .Where(file =>
@@ -15,27 +22,40 @@
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
         .ToList(); 
         
-    // The background image (defaults to background.webp, but .png and .jpg are also valid extensions)
     string backgroundImage = $"gallery/{currentController}/{viewName}/background.webp";
-
-    // Checks to ensure a file named "background-home" exists with one of the listed extensions and then uses
-    // the first matched filename based on the listing order below to create the correct imagePath string.
-    string[] imageExtensions = { ".webp", ".png", ".jpg" };
+    string[] imageExtensions = { ".jpg", ".png", ".webp" };
 
     // Loop through possible extensions
     foreach (var extension in imageExtensions)
     {
         var imagePath = $"gallery/{currentController}/{viewName}/background{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
-        {
-            // There is a Match
+        {            
             backgroundImage = imagePath;
             break;
         }
     }
 }
 
-<partial name="GalleryMenu" />
+<div class="container text-center">
+    <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
+
+        <div class="col menu-item">
+            <div class="bg-danger text-center p-0 border border border-dark rounded">
+                <a class="menu-link text-dark w-100" asp-area="" asp-controller="@currentController" asp-action="Index">Back</a>
+            </div>
+        </div>
+
+        @foreach (var folder in folders)
+        {
+            <div class="col menu-item" data-viewName="@folder">
+                <div id="@folder" class="bg-light text-center p-0 border border-dark rounded">
+                    <a id="@folder link" class="menu-link text-dark w-100" asp-controller="@currentController" asp-action="gallery" asp-route-viewName="@folder">@folder</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 <div class="container">
     <button type="button" onclick="topFunction()" id="top-button" title="Go to top">Top</button>
@@ -54,12 +74,25 @@
     </div>
 </div>
 
+<!-- Replaces the background-image -->
 <script>
     $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
 </script>
+ 
+<!-- Toggle the Current Menu Button to indicate it is selected -->
+<script>
+    var mainElement = document.getElementById("@viewName");
+    var secondaryElement = document.getElementById("@viewName link");
 
-    
-@* <!-- Script to hide current selected menu option -->    
+    mainElement.classList.toggle("bg-light");
+    mainElement.classList.toggle("bg-success");
+
+    secondaryElement.classList.toggle("text-dark");
+    secondaryElement.classList.toggle("text-light");
+</script>
+
+
+@* <!-- Hide current selected menu option (Optional) -->    
 <script>
     hideCurrentMenuSelection('@viewName');
 
@@ -76,4 +109,3 @@
         });
     }
 </script> *@
-
