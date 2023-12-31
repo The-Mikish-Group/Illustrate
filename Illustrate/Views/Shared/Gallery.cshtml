@@ -18,12 +18,13 @@
             !System.IO.Path.GetFileName(file).StartsWith("background", StringComparison.OrdinalIgnoreCase) &&
             (System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
              System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+             System.IO.Path.GetExtension(file).Equals(".svg", StringComparison.OrdinalIgnoreCase) ||
              System.IO.Path.GetExtension(file).Equals(".webp", StringComparison.OrdinalIgnoreCase)))
         .Select(file => $"~/{System.IO.Path.Combine(currentAction, currentController, viewName, System.IO.Path.GetFileName(file)).Replace("\\", "/")}")
         .ToList(); 
         
     string backgroundImage = $"gallery/{currentController}/{viewName}/background.webp";
-    string[] imageExtensions = { ".jpg", ".png", ".webp" };
+    string[] imageExtensions = { ".jpg", ".png", ".webp", ".svg" };
 
     // Loop through possible extensions
     foreach (var extension in imageExtensions)
@@ -37,15 +38,20 @@
     }
 }
 
+<button type="button" onclick="topFunction()" id="top-button" title="Go to top">Top</button>
+
+<!-- Gallery Menu -->
 <div class="container text-center">
     <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
 
+        <!-- Back Button -->
         <div class="col menu-item">
             <div class="bg-danger text-center p-0 border border border-dark rounded">
                 <a class="menu-link text-dark w-100" asp-area="" asp-controller="@currentController" asp-action="Index">Back</a>
             </div>
         </div>
 
+        <!-- Gallery Buttons -->
         @foreach (var folder in folders)
         {
             <div class="col menu-item" data-viewName="@folder">
@@ -57,9 +63,9 @@
     </div>
 </div>
 
-<div class="container">
-    <button type="button" onclick="topFunction()" id="top-button" title="Go to top">Top</button>
-    <div id="images-container" class="row g-0 g-lg-4">
+<!-- Gallery Images -->
+<div class="container">    
+    <div id="images-container" class="row g-0 g-lg-4" style="display: none">
         @foreach (var file in files)
         {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
