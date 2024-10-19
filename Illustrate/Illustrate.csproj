@@ -15,40 +15,49 @@
     <Compile Remove="Views\BC\**" />
     <Compile Remove="Views\Laser\**" />
     <Compile Remove="Views\MV\**" />
-    <Compile Remove="wwwroot\Gallery\AP\**" />
-    <Compile Remove="wwwroot\Gallery\BC\**" />
-    <Compile Remove="wwwroot\Gallery\MV\**" />
+    <Compile Remove="wwwroot\Gallery\_Demo\**" />
+    <Compile Remove="wwwroot\Gallery_old\**" />
     <Content Remove="Views\AP\**" />
     <Content Remove="Views\BC\**" />
     <Content Remove="Views\Laser\**" />
     <Content Remove="Views\MV\**" />
-    <Content Remove="wwwroot\Gallery\AP\**" />
-    <Content Remove="wwwroot\Gallery\BC\**" />
-    <Content Remove="wwwroot\Gallery\MV\**" />
+    <Content Remove="wwwroot\Gallery\_Demo\**" />
+    <Content Remove="wwwroot\Gallery_old\**" />
     <EmbeddedResource Remove="Views\AP\**" />
     <EmbeddedResource Remove="Views\BC\**" />
     <EmbeddedResource Remove="Views\Laser\**" />
     <EmbeddedResource Remove="Views\MV\**" />
-    <EmbeddedResource Remove="wwwroot\Gallery\AP\**" />
-    <EmbeddedResource Remove="wwwroot\Gallery\BC\**" />
-    <EmbeddedResource Remove="wwwroot\Gallery\MV\**" />
+    <EmbeddedResource Remove="wwwroot\Gallery\_Demo\**" />
+    <EmbeddedResource Remove="wwwroot\Gallery_old\**" />
     <None Remove="Views\AP\**" />
     <None Remove="Views\BC\**" />
     <None Remove="Views\Laser\**" />
     <None Remove="Views\MV\**" />
-    <None Remove="wwwroot\Gallery\AP\**" />
-    <None Remove="wwwroot\Gallery\BC\**" />
-    <None Remove="wwwroot\Gallery\MV\**" />
+    <None Remove="wwwroot\Gallery\_Demo\**" />
+    <None Remove="wwwroot\Gallery_old\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Controllers\BCController.cs" />
     <Compile Remove="Controllers\LaserController.cs" />
     <Compile Remove="Controllers\MVController.cs" />
+    <Compile Remove="Helpers\ImageDisplayHelper.cs" />
     <Compile Remove="Startup.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js.map" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js.map" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.js" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.js.map" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js.map" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.js" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.js.map" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
+    <Content Remove="C:\Users\Mikish\.nuget\packages\bootstrap\5.3.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
     <Content Remove="Views\Home\Christmas.cshtml" />
     <Content Remove="Views\Home\Demo0337.cshtml" />
     <Content Remove="Views\Home\Flowers.cshtml" />
@@ -60,35 +69,18 @@
     <Content Remove="Views\Shared\_GalleryMenu.cshtml" />
     <Content Remove="Views\Shared\_ImagesMenu.cshtml" />
     <Content Remove="Views\Shared\_Index.cshtml" />
+    <Content Remove="wwwroot\Videos\Video1.mp4" />
+    <Content Remove="wwwroot\Videos\Video2.mp4" />
+    <Content Remove="wwwroot\Videos\Video3.mp4" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\Shared\Galleries.cshtml" />
-    <None Include="wwwroot\Gallery\Laser\background.webp" />
-    <None Include="wwwroot\Gallery\Laser\Flowers\background.webp" />
-    <None Include="wwwroot\Gallery\Laser\Religious\background.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\A Favorite One.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\A Favorite Too.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\A nice one.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\Another Favorite.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\background.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\Golden.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\Goodbye.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\Our Flag.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\Rainbow.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z04.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z05.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z06.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z07.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z09.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z10.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z11.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z12.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z13.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z14.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z15.webp" />
-    <None Include="wwwroot\Gallery\Demo\Sunsets\z16.webp" />
-    <None Include="wwwroot\Gallery\Demo\background.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -99,6 +91,12 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<style type="text/css">
+
+#showimage{
+	position:absolute;
+	visibility:hidden;
+	border: 1px solid gray;
+	left: 124px;
+	top: 7px;
+}
+
+#dragbar{
+cursor: hand;
+cursor: pointer;
+background-color: #EFEFEF;
+min-width: 100px; /*NS6 style to overcome bug*/
+}
+
+#dragbar #closetext{
+font-weight: bold;
+margin-right: 1px;
+}
+</style>
+
+<script type="text/javascript">
+
+var ie=document.all
+var ns6=document.getElementById&&!document.all
+
+function ietruebody(){
+return (document.compatMode && document.compatMode!="BackCompat" && !window.opera)? document.documentElement : document.body
+}
+
+function enlarge(which, e, position, imgwidth, imgheight){
+if (ie||ns6){
+crossobj=document.getElementById? document.getElementById("showimage") : document.all.showimage
+if (position=="center"){
+pgyoffset=ns6? parseInt(pageYOffset) : parseInt(ietruebody().scrollTop)
+horzpos=ns6? pageXOffset+window.innerWidth/2-imgwidth/2 : ietruebody().scrollLeft+ietruebody().clientWidth/2-imgwidth/2
+vertpos=ns6? pgyoffset+window.innerHeight/2-imgheight/2 : pgyoffset+ietruebody().clientHeight/2-imgheight/2
+if (window.opera && window.innerHeight) //compensate for Opera toolbar
+vertpos=pgyoffset+window.innerHeight/2-imgheight/2
+vertpos=Math.max(pgyoffset, vertpos)
+}
+else{
+var horzpos=ns6? pageXOffset+e.clientX : ietruebody().scrollLeft+event.clientX
+var vertpos=ns6? pageYOffset+e.clientY : ietruebody().scrollTop+event.clientY
+}
+crossobj.style.left=horzpos+"px"
+crossobj.style.top=vertpos+"px"
+
+crossobj.innerHTML='<div align="right" id="dragbar"><span id="closetext" onClick="closepreview()">Close</span> </div><img src="'+which+'">'
+crossobj.style.visibility="visible"
+return false
+}
+else //if NOT IE 4+ or NS 6+, simply display image in full browser window
+return true
+}
+
+function closepreview(){
+crossobj.style.visibility="hidden"
+}
+
+function drag_drop(e){
+if (ie&&dragapproved){
+crossobj.style.left=tempx+event.clientX-offsetx+"px"
+crossobj.style.top=tempy+event.clientY-offsety+"px"
+}
+else if (ns6&&dragapproved){
+crossobj.style.left=tempx+e.clientX-offsetx+"px"
+crossobj.style.top=tempy+e.clientY-offsety+"px"
+}
+return false
+}
+
+function initializedrag(e){
+if (ie&&event.srcElement.id=="dragbar"||ns6&&e.target.id=="dragbar"){
+offsetx=ie? event.clientX : e.clientX
+offsety=ie? event.clientY : e.clientY
+
+tempx=parseInt(crossobj.style.left)
+tempy=parseInt(crossobj.style.top)
+
+dragapproved=true
+document.onmousemove=drag_drop
+}
+}
+
+document.onmousedown=initializedrag
+document.onmouseup=new Function("dragapproved=false")
+
+</script>
+
+<title>KPHS Class of '68 ~ 40-Year Reunion Picture (interactive)</title>
+</head>
+
+<body link=red vlink=orange bgcolor="#000000" background="../setups/PhotoGray_browser_bg-2.jpg"><br /><table width=1000 align=center><tr><td><font face="Arial, Helvetica, sans-serif" color=gold>
+~<small> <a href="../default.htm">Back to KelvynPark68.com</a> </small>~</font><br /><br /><center><hr color=orange /><img src="cropd.jpg" align=center />
+<font face="Arial, Helvetica, sans-serif" color=gold><br /><br /><small>Interactive:  Hover over person to see name; click on face to see "Then and Now" pictures.</small>
+</font><br /><br />
+
+
+<div id="showimage"></div>
+<img src="reunion.png" alt="" width="1000" height="560" border="0" usemap="#Map" />
+<map name="Map" id="Map">
+
+<!--code memo, replace pat.jpg with the actual picture for that specific entry. After the onclick there are two numbers at the end 155,208 these need to be changed to whatever each individual pic size is, the 155 is width and the 208 is height. And the name of each specific entry should go between the quotes after the alt tag. The title tag has been added to allow the alt tag to be seen in firefox and other browsers. -->
+
+<!--first row, pictures numbered from left to right -->
+
+<area shape="circle" coords="74,287,25" href="althoffp.jpg" onclick="return enlarge('althoffp.jpg',event,'center',155,208)" title="Patricia Althoff" alt="Patricia Althoff" />
+<area shape="circle" coords="160,273,26" href="hickeyj.jpg" onclick="return enlarge('hickeyj.jpg',event,'center',155,208)" title="Judy Hickey" alt="Judy Hickey" />
+<area shape="circle" coords="229,273,26" href="reinings.jpg" onclick="return enlarge('reinings.jpg',event,'center',155,208)" title="Sandy Reining" alt="Sandy Reining" />
+<area shape="circle" coords="312,271,28" href="pattonp.jpg" onclick="return enlarge('pattonp.jpg',event,'center',155,208)" title="Penny Patton" alt="Penny Patton" />
+<area shape="circle" coords="383,265,28" href="hickeyd.jpg" onclick="return enlarge('hickeyd.jpg',event,'center',155,208)" title="Diane Hickey" alt="Diane Hickey" />
+<area shape="circle" coords="448,269,28" href="golzl.jpg" onclick="return enlarge('golzl.jpg',event,'center',155,208)" title="Linda Golz" alt="Linda Golz" />
+<area shape="circle" coords="517,271,31" href="coughlinc.jpg" onclick="return enlarge('coughlinc.jpg',event,'center',155,208)" title="Candy Coughlin" alt="Candy Coughlin" />
+<area shape="circle" coords="597,276,28" href="catalanoj.jpg" onclick="return enlarge('catalanoj.jpg',event,'center',155,208)" title="Josette Catalano" alt="Josette Catalano" />
+<area shape="circle" coords="676,273,26" href="salyerst.jpg" onclick="return enlarge('salyerst.jpg',event,'center',155,208)" title="Toni Salyers" alt="Toni Salyers" />
+<area shape="circle" coords="747,277,29" href="salyersl.jpg" onclick="return enlarge('salyersl.jpg',event,'center',155,208)" title="Louise Salyers" alt="Louise Salyers" />
+<area shape="circle" coords="814,280,30" href="cipollaa.jpg" onclick="return enlarge('cipollaa.jpg',event,'center',155,208)" title="Anita Cipolla" alt="Anita Cipolla" />
+<area shape="circle" coords="881,279,29" href="johnsons.jpg" onclick="return enlarge('johnsons.jpg',event,'center',155,208)" title="Sharon Johnson" alt="Sharon Johnson" />
+<area shape="circle" coords="940,281,30" href="johnsond.jpg" onclick="return enlarge('johnsond.jpg',event,'center',155,208)" title="Dennis Johnson" alt="Dennis Johnson" />
+<!--second row, pictures numbered from left to right -->
+<area shape="circle" coords="79,187,25" href="petersl.jpg" onclick="return enlarge('petersl.jpg',event,'center',155,208)" title="Linda Peters" alt="Linda Peters" />
+<area shape="circle" coords="91,234,22" href="quattrocchic.jpg" onclick="return enlarge('quattrocchic.jpg',event,'center',155,208)" title="Connie Quattrocchi" alt="Connie Quattrocchi" />
+<area shape="circle" coords="141,203,23" href="rutling.jpg" onclick="return enlarge('rutling.jpg',event,'center',155,208)" title="Gayle Rutlin" alt="Gayle Rutlin" />
+<area shape="circle" coords="191,204,21" href="underwoodj.jpg" onclick="return enlarge('underwoodj.jpg',event,'center',155,208)" title="Jennifer Underwood" alt="Jennifer Underwood" />
+<area shape="circle" coords="247,200,25" href="tolemyb.jpg" onclick="return enlarge('tolemyb.jpg',event,'center',155,208)" title="Barb Tolemy" alt="Barb Tolemy" />
+<area shape="circle" coords="298,195,22" href="quinnc.jpg" onclick="return enlarge('quinnc.jpg',event,'center',155,208)" title="Colleen Quinn" alt="Colleen Quinn" />
+<area shape="circle" coords="346,206,24" href="karedesa.jpg" onclick="return enlarge('karedesa.jpg',event,'center',155,208)" title="Ann Karedes" alt="Ann Karedes" />
+<area shape="circle" coords="395,214,20" href="jacksone.jpg" onclick="return enlarge('jacksone.jpg',event,'center',155,208)" title="Elsie Jackson" alt="Elsie Jackson" />
+<area shape="circle" coords="455,195,21" href="amonn.jpg" onclick="return enlarge('amonn.jpg',event,'center',155,208)" title="Nevenka Amon" alt="Nevenka Amon" />
+<area shape="circle" coords="535,193,24" href="enwelll.jpg" onclick="return enlarge('enwelll.jpg',event,'center',155,208)" title="Linda Enwell" alt="Linda Enwell" />
+<area shape="circle" coords="633,221,22" href="nicholasj.jpg" onclick="return enlarge('nicholasj.jpg',event,'center',155,208)" title="Janice Nicholas" alt="Janice Nicholas" />
+<area shape="circle" coords="706,221,22" href="lawrencej.jpg" onclick="return enlarge('lawrencej.jpg',event,'center',155,208)" title="Joyce Lawrence" alt="Joyce Lawrence" />
+<area shape="circle" coords="782,209,22" href="moscatol.jpg" onclick="return enlarge('moscatol.jpg',event,'center',155,208)" title="Linda Moscato" alt="Linda Moscato" />
+<area shape="circle" coords="848,214,25" href="riversj.jpg" onclick="return enlarge('riversj.jpg',event,'center',155,208)" title="Judy Rivers" alt="Judy Rivers" />
+<area shape="circle" coords="920,215,25" href="voytovickl.jpg" onclick="return enlarge('voytovickl.jpg',event,'center',155,208)" title="Lori Voytovick" alt="Lori Voytovick" />
+
+<!--third row, pictures numbered from left to right -->
+
+<area shape="circle" coords="161,169,19" href="weldong.jpg" onclick="return enlarge('weldong.jpg',event,'center',155,208)" title="Gayle Weldon" alt="Gayle Weldon" />
+<area shape="circle" coords="233,156,16" href="susongm.jpg" onclick="return enlarge('susongm.jpg',event,'center',155,208)" title="Mary Susong" alt="Mary Susong" />
+<area shape="circle" coords="307,157,16" href="jordanp.jpg" onclick="return enlarge('jordanp.jpg',event,'center',155,208)" title="Pat Jordan" alt="PAT JORDAN" />
+<area shape="circle" coords="361,164,20" href="jablonskip.jpg" onclick="return enlarge('jablonskip.jpg',event,'center',155,208)" title="Pat Jablonski" alt="PAT JABLONSKI" />
+<area shape="circle" coords="413,169,22" href="neacej.jpg" onclick="return enlarge('neacej.jpg',event,'center',155,208)" title="Judy Neace" alt="JUDY NEACE" />
+<area shape="circle" coords="479,163,19" href="penlandm.jpg" onclick="return enlarge('penlandm.jpg',event,'center',155,208)" title="Marilyn Penland" alt="MARILYN PENLAND" />
+<area shape="circle" coords="552,154,18" href="fabiank.jpg" onclick="return enlarge('fabiank.jpg',event,'center',155,208)" title="Ken Fabian" alt="KEN FABIAN" />
+<area shape="circle" coords="627,172,22" href="karijolicb.jpg" onclick="return enlarge('karijolicb.jpg',event,'center',155,208)" title="Barb Karijolic" alt="BARB KARIJOLIC" />
+<area shape="circle" coords="673,165,20" href="sanfilippob.jpg" onclick="return enlarge('sanfilippob.jpg',event,'center',155,208)" title="Bonnie Sanfilippo" alt="BONNIE SANFILIPPO" />
+<area shape="circle" coords="741,163,20" href="grousls.jpg" onclick="return enlarge('grousls.jpg',event,'center',155,208)" title="Sue Grousl" alt="SUE GROUSL" />
+<area shape="circle" coords="813,166,17" href="marrozzov.jpg" onclick="return enlarge('marrozzov.jpg',event,'center',155,208)" title="Vickey Marrozzo" alt="VICKEY MARROZZO" />
+<area shape="circle" coords="891,175,19" href="mullinsl.jpg" onclick="return enlarge('mullinsl.jpg',event,'center',155,208)" title="Linda Mullins" alt="LINDA MULLINS" />
+
+<!--fourth row, pictures numbered from left to right -->
+
+<area shape="circle" coords="161,128,22" href="colemanm.jpg" onclick="return enlarge('colemanm.jpg',event,'center',155,208)" title="Mike Coleman" alt="MIKE COLEMAN" />
+<area shape="circle" coords="206,138,16" href="nelsonl.jpg" onclick="return enlarge('nelsonl.jpg',event,'center',155,208)" title="Linda Nelson" alt="LINDA NELSON" />
+<area shape="circle" coords="289,121,16" href="schwartzs.jpg" onclick="return enlarge('schwartzs.jpg',event,'center',155,208)" title="Sandy Schwartz" alt="SANDY SCHWARTZ" />
+<area shape="circle" coords="346,125,20" href="treibere.jpg" onclick="return enlarge('treibere.jpg',event,'center',155,208)" title="Evelyn Treiber" alt="EVELYN TREIBER" />
+<area shape="circle" coords="398,133,16" href="nemesa.jpg" onclick="return enlarge('nemesa.jpg',event,'center',155,208)" title="Arlene Nemes" alt="ARLENE NEMES" />
+<area shape="circle" coords="450,140,15" href="janikn.jpg" onclick="return enlarge('janikn.jpg',event,'center',155,208)" title="Nancy Janik" alt="NANCY JANIK" />
+<area shape="circle" coords="499,134,17" href="andersonj.jpg" onclick="return enlarge('andersonj.jpg',event,'center',155,208)" title="Janette Anderson" alt="JANETTE ANDERSON" />
+<area shape="circle" coords="567,125,15" href="starzynskib.jpg" onclick="return enlarge('starzynskib.jpg',event,'center',155,208)" title="Brenda Starzynski" alt="BRENDA STARZYNSKI" />
+<area shape="circle" coords="614,134,16" href="bachc.jpg" onclick="return enlarge('bachc.jpg',event,'center',155,208)" title="Carol Bach" alt="CAROL BACH" />
+<area shape="circle" coords="664,125,15" href="haldesg.jpg" onclick="return enlarge('haldesg.jpg',event,'center',155,208)" title="Georgia Haldes" alt="GEORGIA HALDES" />
+<area shape="circle" coords="710,134,16" href="valstedi.jpg" onclick="return enlarge('valstedi.jpg',event,'center',155,208)" title="Inger Valsted" alt="INGER VALSTED" />
+<area shape="circle" coords="780,137,20" href="johnsonc.jpg" onclick="return enlarge('johnsonc.jpg',event,'center',155,208)" title="Connie Johnson" alt="CONNIE JOHNSON" />
+<area shape="circle" coords="855,140,16" href="cathersp.jpg" onclick="return enlarge('cathersp.jpg',event,'center',155,208)" title="Pat Cathers" alt="PAT CATHERS" />
+
+<!--fifth row, pictures numbered from left to right -->
+
+
+<area shape="circle" coords="252,93,18" href="englerb.jpg" onclick="return enlarge('englerb.jpg',event,'center',155,208)" title="Bob Engler" alt="BOB ENGLER" />
+<area shape="circle" coords="318,86,15" href="leonardr.jpg" onclick="return enlarge('leonardr.jpg',event,'center',155,208)" title="Ron Leonard" alt="RON LEONARD" />
+<area shape="circle" coords="392,92,17" href="kaneg.jpg" onclick="return enlarge('kaneg.jpg',event,'center',155,208)" title="Greg Kane" alt="GREG KANE" />
+<area shape="circle" coords="502,93,17" href="burnsd.jpg" onclick="return enlarge('burnsd.jpg',event,'center',155,208)" title="Dennis Burns" alt="DENNIS BURNS" />
+<area shape="circle" coords="588,91,16" href="czyzh.jpg" onclick="return enlarge('czyzh.jpg',event,'center',155,208)" title="Henry Czyz" alt="HENRY CZYZ" />
+<area shape="circle" coords="656,95,13" href="kasalk.jpg" onclick="return enlarge('kasalk.jpg',event,'center',155,208)" title="Ken Kasal" alt="KEN KASAL" />
+<area shape="circle" coords="731,102,17" href="hadep.jpg" onclick="return enlarge('hadep.jpg',event,'center',155,208)" title="Phil Hade" alt="PHIL HADE" />
+<area shape="circle" coords="799,103,19" href="ballards.jpg" onclick="return enlarge('ballards.jpg',event,'center',155,208)" title="Susan Ballard" alt="SUSAN BALLARD" />
+<area shape="circle" coords="845,108,16" href="skultetyn.jpg" onclick="return enlarge('skultetyn.jpg',event,'center',155,208)" title="Nadine Skultety" alt="NADINE SKULTETY" />
+
+<!--sixth row, pictures numbered from left to right -->
+
+<area shape="circle" coords="288,74,16" href="blainej.jpg" onclick="return enlarge('blainej.jpg',event,'center',155,208)" title="Jim Blaine" alt="JIM BLAINE" />
+<area shape="circle" coords="349,81,15" href="limbachr.jpg" onclick="return enlarge('limbachr.jpg',event,'center',155,208)" title="Ray Limbach" alt="RAY LIMBACH" />
+<area shape="circle" coords="423,73,18" href="hoehnr.jpg" onclick="return enlarge('hoehnr.jpg',event,'center',155,208)" title="Ron Hoehn" alt="RON HOEHN" />
+<area shape="circle" coords="467,68,17" href="langeb.jpg" onclick="return enlarge('langeb.jpg',event,'center',155,208)" title="Bob Lange" alt="BOB LANGE" />
+<area shape="circle" coords="523,67,16" href="mccabes.jpg" onclick="return enlarge('mccabes.jpg',event,'center',155,208)" title="Sue McCabe" alt="SUE MCCABE" />
+<area shape="circle" coords="565,71,13" href="puralewskij.jpg" onclick="return enlarge('puralewskij.jpg',event,'center',155,208)" title="Jim Puralewski" alt="JIM PURALEWSKI" />
+<area shape="circle" coords="625,70,18" href="hamiltonl.jpg" onclick="return enlarge('hamiltonl.jpg',event,'center',155,208)" title="Louis Hamilton" alt="LOUIS HAMILTON" />
+<area shape="circle" coords="710,64,19" href="sweeneyj.jpg" onclick="return enlarge('sweeneyj.jpg',event,'center',155,208)" title="John Sweeney" alt="JOHN SWEENEY" />
+<area shape="circle" coords="771,59,20" href="wikellv.jpg" onclick="return enlarge('wikellv.jpg',event,'center',155,208)" title="Victor Wikell" alt="VICTOR WIKELL" />
+<area shape="circle" coords="830,76,19" href="lahendrop.jpg" onclick="return enlarge('lahendrop.jpg',event,'center',155,208)" title="Phil Lahendro" alt="PHIL LAHENDRO" />
+</map>
+<br /><br />
+ <font face="Arial, Helvetica, sans-serif" color=gold>Classmates not in picture:<br /><br />
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="wagnerb.jpg" onclick="return enlarge('wagnerb.jpg',event,'center',155,208)" target=_blank>Bob Wagner</a>
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="slobodeckid.jpg" onclick="return enlarge('slobodeckid.jpg',event,'center',155,208)" target=_blank>Darlene Slobodecki</a>
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="bakerb.jpg" onclick="return enlarge('bakerb.jpg',event,'center',155,208)" target=_blank>Betty Baker</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="fontanaj.jpg" onclick="return enlarge('fontanaj.jpg',event,'center',155,208)" target=_blank>Jack Fontana</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="harelandg.jpg" onclick="return enlarge('harelandg.jpg',event,'center',155,208)" target=_blank>Gary Hareland</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp  <a href="thomas.jpg" onclick="return enlarge('thomas.jpg',event,'center',155,208)" target=_blank>Sue Thoma</a> &nbsp&nbsp ~ &nbsp&nbsp 
+  <br /><br /> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="kudobckd.jpg" onclick="return enlarge('kudobckd.jpg',event,'center',155,208)" target=_blank>Diane Kudobeck</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="rootl.jpg" onclick="return enlarge('rootl.jpg',event,'center',155,208)" target=_blank>Linda Root</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="knieseri.jpg" onclick="return enlarge('knieseri.jpg',event,'center',155,208)" target=_blank>Ileene Kneiser</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="laruej.jpg" onclick="return enlarge('laruej.jpg',event,'center',155,208)" target=_blank>Janet Larue</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="makc.jpg" onclick="return enlarge('makc.jpg',event,'center',155,208)" target=_blank>Chantal Mak</a> &nbsp&nbsp ~ &nbsp&nbsp  <br /><br /> 
+  &nbsp&nbsp ~ &nbsp&nbsp  <a href="odonnellk.jpg" onclick="return enlarge('odonnellk.jpg',event,'center',155,208)" target=_blank>Kathleen O'Donnell</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="potamitisk.jpg" onclick="return enlarge('potamitisk.jpg',event,'center',155,208)" target=_blank>Kathy Potamitis</a> 
+  &nbsp&nbsp ~ &nbsp ~ &nbsp <a href="rizere.jpg" onclick="return enlarge('rizere.jpg',event,'center',155,208)" target=_blank>Ed Rizer</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="ritchieg.jpg" onclick="return enlarge('ritchieg.jpg',event,'center',155,208)" target=_blank>Gary Ritchie</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="sagolsb.jpg" onclick="return enlarge('sagolsb.jpg',event,'center',155,208)" target=_blank>Bel Sagols</a> 
+  &nbsp&nbsp ~ &nbsp&nbsp <a href="samuelsonl.jpg" onclick="return enlarge('samuelsonl.jpg',event,'center',155,208)" target=_blank>Lorelei Samuelson</a> &nbsp&nbsp ~ &nbsp&nbsp 
+<br /><br /><hr color=orange width="75%" align=center /><br />
+<br />You may obtain your official reunion picture direct from the photographer:<br />
+<br />Tom Killoran Photography<br />
+11314 S Harlem<br />
+Worth, IL 60482 <br />
+708-361-0025<br /><br />
+
+<a href="../../www.tomkilloranphotography.com/default.htm">www.tomkilloranphotography.com</a><br /><br /><br /><hr color=orange width="75%" align=center />
+
+<a href="../default.htm">Back to KelvynPark68.com</a>
+</font>
+<br /><hr color=orange width="75%" align=center /><br /><br />
+
+
+  
+
+
+
+</center></td></tr></table><br />
+</body>
+</html>

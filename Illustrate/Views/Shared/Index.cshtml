@@ -1,67 +1,73 @@
-﻿<!-- Shared Index -->
+﻿<!-- Shared/Index.cshtml -->
 @{
-    var viewName = ViewData["ViewName"]?.ToString();
+    var galleriesFolder = "Gallery";
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Shared";
 
-    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Shared";
-    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/Gallery/{currentController}"))
-                           .Select(folder => System.IO.Path.GetFileName(folder))
-                           .ToList();
+    // galleryFolder
+    var galleryFolder = currentController.Replace("slide", "", StringComparison.OrdinalIgnoreCase)
+                                         .Replace("combo", "", StringComparison.OrdinalIgnoreCase);
+    // galleryType
+    var galleryType = currentController.Contains("slide", StringComparison.OrdinalIgnoreCase) ? "Slideshows" :
+                      currentController.Contains("combo", StringComparison.OrdinalIgnoreCase) ? "Galleries" : "Galleries"; // Say Gallerys in Heading instead of Combos ie "Combos" : "Galleries";
+    galleryType ??= "Galleries"; // default - handle null
 
-    string backgroundImage = $"gallery/{currentController}/background.webp"; // default
-    string[] imageExtensions = { ".jpg", ".png", ".webp", ".svg" }; // possible extensions
+    // folders
+    var foldersPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/{galleriesFolder}/{galleryFolder}");
+    var folders = Directory.GetDirectories(foldersPath)
+                          .Where(folder => !System.IO.Path.GetFileName(folder).StartsWith("_"))
+                          .Select(folder => System.IO.Path.GetFileName(folder))
+                          .ToList();
 
-    // Loop through possible extensions
+    var backgroundImage = $"{galleriesFolder}/{galleryFolder}/background.webp";
+    var imageExtensions = new[] { ".jpg", ".png", ".webp", ".svg" };
     foreach (var extension in imageExtensions)
     {
-        var imagePath = $"gallery/{currentController}/background{extension}";
+        var imagePath = $"{galleriesFolder}/{galleryFolder}/background{extension}";
         if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath)))
-        {            
+        {
             backgroundImage = imagePath;
             break;
         }
     }
 }
 
-<div class="text-center mt-3">
+<!-- View Heading -->
+<div class="text-center my-2">
     <h2 class="text-white">
-        @currentController
+        @galleryFolder @galleryType
     </h2>
 </div>
 
-<div class="container text-center">
-    <div class="row gx-0 gx-lg-4 justify-content-center row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-auto  g-1 g-lg-3 mb-3">
+<!-- Link Button Menu -->
+<div class="container justify-content-center row gx-1 gx-lg-4 my-2 p-0">
 
-        <div class="col menu-item">
-            <div class="bg-danger text-center p-0 border border border-dark rounded">
-                <a class="menu-link text-dark w-100" asp-area="" asp-controller="Galleries" asp-action="Index">Back</a>
-            </div>
+    <!-- Back Link Button -->
+    <div class="col-2 pt-1 mb-1">
+        <div class="h-100 text-center text-white">
+            <a class="btn bg-red-dark btn-sm group-button-size" href="~/">
+                <img alt="" class="back-button-image-size" src="/lib/svg/Buttons/Back-White.svg">
+            </a>
         </div>
+    </div>
 
-        @foreach (var folder in folders)
-        {
-            <div class="col menu-item" data-viewName="@folder">
-                <div id="@folder" class="bg-light text-center p-0 border border-dark rounded">
-                    <a id="@folder link" class="menu-link text-dark w-100" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+    <div class="col-8 menu-item">
+        <div class="row">
+
+            <!-- Folder Links -->
+            @foreach (var folder in folders)
+            {
+                <div class="col-6 col-lg-3 menu-item" data-viewName="@folder">
+                    <div id="@folder" class="bg-green-lighter text-center p-0 border border-dark rounded">
+                        <a id="@folder-link" class="menu-link text-dark" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
-
 <!-- Replaces the background-image -->
 <script>
-    $("body").css("background-image", "url('../@Url.Content(backgroundImage)')");
-</script>
-
-<!-- Toggle the Current Menu Button to indicate it is selected -->
-<script>
-    var mainElement = document.getElementById("@viewName");
-    var secondaryElement = document.getElementById("@viewName link");
-
-    mainElement.classList.toggle("bg-light");
-    mainElement.classList.toggle("bg-success");
-
-    secondaryElement.classList.toggle("text-dark");
-    secondaryElement.classList.toggle("text-light");
-
+    // $("body").css("background-image", "url('../@Url.Content(backgroundImage)')"); // control background
+    $("body").css("background-color", "#40996D"); /* bg-green-dark */
+    $("body").css("background-image", "url('../PageImages/BackgroundBlurr.webp')");
 </script>

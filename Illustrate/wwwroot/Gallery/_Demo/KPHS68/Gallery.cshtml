@@ -1,0 +1,404 @@
+﻿@using Illustrate.Helpers;
+@using System.IO;
+@using SixLabors.ImageSharp;
+@using System.Linq;
+
+<!-- Shared Gallery.cshtml -->
+@{
+    Layout = "_Layout";
+}
+
+@{
+    // Galleries Folder Name
+    string galleriesFolder = "Gallery";
+
+    // Function to get image dimensions
+    Size GetImageDimensions(string imagePath)
+    {
+        using (var image = Image.Load(imagePath))
+        {
+            return new Size(image.Width, image.Height);
+        }
+    }
+
+    // Get the folders for the menu links
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Shared";
+    var galleryFolder = currentController
+    .Replace("slide", "", StringComparison.OrdinalIgnoreCase)
+    .Replace("combo", "", StringComparison.OrdinalIgnoreCase);
+
+    var folders = Directory.GetDirectories(System.IO.Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/{galleriesFolder}/{galleryFolder}"))
+    .Where(folder => !System.IO.Path.GetFileName(folder).StartsWith("_"))
+    .Select(folder => System.IO.Path.GetFileName(folder))
+    .ToList();
+
+    // Get the Gallery files for display
+    var imagefolder = ViewData["ViewName"]?.ToString() ?? ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var currentImageFolder = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", galleriesFolder, galleryFolder, imagefolder);
+
+    // Get the Gallery files for display
+    var files = Directory.GetFiles(currentImageFolder, "*.*")
+    .Where(file =>
+        !System.IO.Path.GetFileName(file).StartsWith("background", StringComparison.OrdinalIgnoreCase) &&
+        !System.IO.Path.GetFileName(file).EndsWith("_thumb.jpg", StringComparison.OrdinalIgnoreCase) &&
+        (System.IO.Path.GetExtension(file).Equals(".png", StringComparison.OrdinalIgnoreCase) ||
+         System.IO.Path.GetExtension(file).Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+         System.IO.Path.GetExtension(file).Equals(".gif", StringComparison.OrdinalIgnoreCase) ||
+         System.IO.Path.GetExtension(file).Equals(".svg", StringComparison.OrdinalIgnoreCase) ||
+         System.IO.Path.GetExtension(file).Equals(".webp", StringComparison.OrdinalIgnoreCase)))
+    .Select(file =>
+    {
+        var imagePath = $"~/{System.IO.Path.Combine(galleriesFolder, galleryFolder, imagefolder, System.IO.Path.GetFileName(file)).Replace("\\", "/")}";
+        var dimensions = GetImageDimensions(file);
+        return new { ImagePath = imagePath, Dimensions = dimensions, };
+    })
+    .OrderBy(entry => entry.Dimensions.Height)
+    .ThenBy(entry => entry.Dimensions.Width)
+    .Select(entry => $"{entry.ImagePath}")
+    .ToList();
+
+    // Create thumbnail only if it doesn't exist
+    var thumbnailService = new ThumbnailService();
+
+    int thumbnailWidth = 640;
+    int thumbnailHeight = 480;
+
+    foreach (var file in files)
+    {
+        var filename = System.IO.Path.Combine(System.IO.Path.GetFileNameWithoutExtension(file)) + "_thumb.jpg";
+        thumbnailService.CreateOrRetrieveThumbnail(file, filename, currentImageFolder, thumbnailWidth, thumbnailHeight);
+    }
+
+    // Get the backgroundImage path
+    string backgroundImage = $"{galleriesFolder}/{galleryFolder}/{imagefolder}/background.webp"; // default
+    string[] extensions = { ".jpg", ".png", ".webp", ".svg", };
+    foreach (var extension in extensions)
+    {
+        var bgPath = $"{galleriesFolder}/{galleryFolder}/{imagefolder}/background{extension}";
+        if (System.IO.File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", bgPath)))
+        {
+            backgroundImage = bgPath;
+            break;
+        }
+    }
+
+    // Gallery type (used in html heading display)
+    var galleryType = currentController.Contains("slide", StringComparison.OrdinalIgnoreCase)
+        ? "Slideshows"
+        : "Galleries";
+    galleryType ??= "Galleries"; // Set default if null
+
+    // Gallery type (used in html heading display)
+    galleryType = currentController.Contains("combo", StringComparison.OrdinalIgnoreCase)
+        ? "Combos"
+        : galleryType;
+    galleryType ??= "Galleries"; // Set default if null
+
+    // Target View (Everything currently targets Gallery)
+    var targetView = currentController.Contains("slide", StringComparison.OrdinalIgnoreCase)
+        ? "Gallery" // send someplace else like Slideshow.cshtml
+        : "Gallery";
+    targetView ??= "Gallery"; // Set default if null
+}
+
+<!-- Function to create a thumbnail -->
+@functions {
+
+    public class ThumbnailService
+    {
+        public void CreateOrRetrieveThumbnail(string file, string thumbnail, string thumbnailsPath, int thumbnailWidth, int thumbnailHeight)
+        {
+            const int maxRetries = 3;
+            int retryCount = 0;
+
+            while (retryCount < maxRetries)
+            {
+                try
+                {
+                    if (!System.IO.File.Exists(System.IO.Path.Combine(thumbnailsPath, thumbnail).Replace("\\", "/")))
+                    {
+                        // Thumbnail doesn't exist, create it
+                        CreateThumbnail(file, thumbnailsPath, thumbnailWidth, thumbnailHeight);
+                    }
+                    return; // Thumbnail creation successful, exit the loop
+                }
+                catch (IOException ex) when (IsFileInUse(ex))
+                {
+                    // File is in use, wait for a short duration before retrying
+                    retryCount++;
+                    System.Threading.Thread.Sleep(1000); // Wait for 1 second before retrying
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error creating thumbnail: {ex.Message}");
+                    return; // Exit the loop on other exceptions
+                }
+            }
+
+            Console.WriteLine($"Failed to create thumbnail after {maxRetries} retries.");
+        }
+
+        private void CreateThumbnail(string file, string thumbnailsPath, int thumbnailWidth, int thumbnailHeight)
+        {
+            ImageHelper.CreateThumbnail(file, thumbnailsPath, thumbnailWidth, thumbnailHeight);
+        }
+
+        private bool IsFileInUse(Exception ex)
+        {
+            // Check if the exception is related to the file being in use
+            // This is a simplistic check, and you may need to enhance it based on specific exceptions you receive
+            return ex is IOException || (ex is UnauthorizedAccessException && ex.Message.Contains("being used by another process"));
+        }
+    }
+}
+
+<!-- Loading Overlay... -->
+<div id="loading-overlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<!-- Go to Top button -->
+<button type="button" onclick="topFunction()" id="top-button" title="Go to top">Top</button>
+
+<!-- Stores current image link in Slide -->
+<input title="ImageLink" hidden type="text" spellcheck="false" value="" id="imageLink">
+
+<!-- View Container Row -->
+<div class="row  mt-5 viewContainer">
+
+    <!-- Menu Column -->
+    <div class="col-12 text-start pt-4">
+
+        <!-- Heading Row -->
+        <div class="row">
+
+            <!-- Back Link Button -->
+            <div class="col-2 text-end my-0 mx-auto">
+                <div class="d-block">
+                    <a id ="Back" class="chalk-link fs-6" href="~/KPHS68Combo">Back</a>
+                </div>
+            </div>
+
+            <!-- Gallery Links -->
+            <div class="col-10 text-center my-0 mx-auto" style="width:260px;">
+
+                <!-- Folder Links -->
+                <div class="row">
+                    @foreach (var folder in folders)
+                    {
+                        <dir id="@folder" class="col-6 mt-0 text-start">
+                            <a id="@folder-link" class="chalk-link fs-6" asp-controller="@currentController" asp-action="Gallery" asp-route-viewName="@folder">@folder</a>
+                        </dir>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>    
+        
+    <!-- Content Column -->
+    <div class="col-12 text-start pt-4">
+
+        <!-- Display Slideshow -->
+        @if (galleryType == "Slideshows" || galleryType == "Combos")
+        {
+
+            <!-- Slideshow Controls -->
+            <div id="SlideshowControls" class="row text-center px-0 mb-2">
+
+                <!-- Prev -->
+                <div class="col-4 text-end">
+                    <button id="Previous" class="slideshow-button" type="button" title="Previous image">
+                        <img class="slideshow-button-image" alt="Prev" src="/lib/svg/Buttons/Previous.svg"> Prev
+                    </button>
+                </div>
+
+                <!-- Copy -->
+                <div class="col-4 text-center">
+                    <button id="Copy" class="slideshow-button" type="button" title="Copy Link to Clipboard" tooltip="Copy this Link" onclick="copyLink()">
+                        <img alt="Copy" class="slideshow-button-image" src="/lib/svg/Buttons/Links.svg"> Copy
+                    </button>
+                </div>
+
+                <!-- Next -->
+                <div class="col-4 text-start">
+                    <button id="Next" class="slideshow-button" type="button" title="Next image">
+                        Next <img class="slideshow-button-image" alt="Next" src="/lib/svg/Buttons/Next.svg">
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Slideshow -->
+            <div id="my-group-2" class="row container-fluid text-center mb-2 mx-0 px-0">
+
+                <!-- Column Carousel -->
+                <div class="col-12 p-0 m-0 mb-3">
+
+                    <container class="p-0 m-0">
+
+                        <!-- Carousel Control-->
+                        <div id="CarouselControl" class="carousel slide pointer-event" data-bs-ride="carousel">
+
+                            <!-- Carousel Inner (CarouselItems) -->
+                            <div id="CarouselItems" class="carousel-inner">
+
+                                @foreach (var file in files)
+                                {
+                                    <div class='bg-transparent carousel-item  @(file == files.First() ? "active" : "")'>
+                                        <img class='d-block bg-gray-lighter p-2'
+                                             src="@Url.Content(System.IO.Path.Combine("/", galleriesFolder, galleryFolder, imagefolder, System.IO.Path.GetFileNameWithoutExtension(file) + "_thumb.jpg").Replace("\\", "/"))"
+                                             alt="@System.IO.Path.GetFileNameWithoutExtension(file).Substring(0, Math.Min(30, System.IO.Path.GetFileNameWithoutExtension(file).Length))" id="CarouselImage" />
+                                    </div>
+                                }
+
+                            </div>
+
+                            <!-- Left And right controls -->
+                            <a title="prev" class="carousel-control-prev" href="#CarouselControl" role="button" data-bs-slide="prev"></a>
+                            <a title="next" class="carousel-control-next" href="#CarouselControl" role="button" data-bs-slide="next"></a>
+
+                        </div>
+
+                    </container>
+
+                </div><!-- End Carousel Column -->
+            </div>
+        }
+
+        @if (galleryType == "Galleries" || galleryType == "Combos")
+        {
+
+            <!-- The Gallery -->
+            <div id="images-container" class="row g-2 g-sm-2 g-lg-2 bg-transparent" style="display: none">
+
+                <!-- Display each Image file and filename -->
+                @foreach (var file in files)
+                {
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 mb-3">
+
+                        <!-- Link to file -->
+                        <a title="Click for full-screen." class="menu-link d-block text-center bg-gray-light" href="@Url.Content(file)" target="_blank">
+
+                            <!-- file_thumb -->
+                            <img class="w-100 img-fluid mx-auto" data-src="@Url.Content(System.IO.Path.Combine("/", galleriesFolder, galleryFolder, imagefolder, System.IO.Path.GetFileNameWithoutExtension(file) + "_thumb.jpg").Replace("\\", "/"))" alt="_Click Me_" />
+
+                            <!-- file name (max of 30 characters shown) -->
+                            <div class="text-black text-center pt-1">
+                                @System.IO.Path.GetFileNameWithoutExtension(file).Substring(0, Math.Min(30, System.IO.Path.GetFileNameWithoutExtension(file).Length))
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+
+    </div><!-- End Content Column -->
+
+    <div id="groove"></div>
+
+</div>
+
+<div id="chalk"></div>
+<div id="eraser"></div>
+@* <div id="ruler"></div>
+ *@
+<!-- Toggle the Current Menu Button to indicate it is selected -->
+<script>
+
+    var mainElement = document.getElementById("@imagefolder");
+    mainElement.style.pointerEvents = 'none';
+
+    var secondaryElement = document.getElementById("@imagefolder-link");
+    if (secondaryElement.classList.contains("chalk-link")) {
+        secondaryElement.classList.remove("chalk-link");
+        secondaryElement.classList.add("chalk-link-selected");
+    } 
+
+</script>
+
+<!-- Keep imageLink up to date each slide. -->
+<script>
+    $(document).ready(function () {
+
+        $('#CarouselControl').carousel('next');
+
+        // Get Domain
+        var domain = window.location.origin;
+
+        // Initialize the carousel
+        $('#CarouselControl').on('slid.bs.carousel', function () {
+            // Get the active item
+            var activeItem = $(this).find('.carousel-item.active');
+
+            // Get the image base link from the active item
+            var imageBaseLink = domain + activeItem.find('img').attr('src');
+
+            // Define the possible extensions
+            var extensions = ['jpg', 'png', 'gif', 'webp', 'svg'];
+
+            // Try to find the actual image file with the right extension
+            var actualImageLink = findActualImageLink(imageBaseLink, extensions);
+
+            // Update the value of the input field
+            document.getElementById("imageLink").value = actualImageLink;
+        });
+
+        // Initialize imageLink with the first image link
+        var firstImageLink = domain + $('#CarouselControl .carousel-item:first img').attr('src');
+        document.getElementById("imageLink").value = findActualImageLink(firstImageLink, extensions);
+
+        // Function to find the actual image link with the right extension
+        function findActualImageLink(baseLink, extensions) {
+            for (var i = 0; i < extensions.length; i++) {
+                var potentialLink = baseLink.replace('_thumb.jpg', '.' + extensions[i]);
+                // Check if the potential link exists, and return it if found
+                if (doesFileExist(potentialLink)) {
+                    return potentialLink;
+                }
+            }
+            // If none of the extensions is found, return the original base link
+            return baseLink;
+        }
+
+        // Function to check if a file exists
+        async function doesFileExist(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                console.error('Error checking file existence:', error);
+                return false;
+            }
+        }
+
+    });
+</script>
+
+<!-- Copy Image Link -->
+<script>
+    function copyLink() {
+        const textToCopy = document.getElementById("imageLink").value;
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => { alert(textToCopy + ` Copied!`) })
+            .catch((error) => { alert(`Copy failed! ${error}`) })
+    }
+</script>
+
+<!-- Image Carousel forward and backwards buttons -->
+<script>
+    $('#Previous').click(function (e) {
+        e.stopPropagation();
+        $('#CarouselControl').carousel('prev');
+        return false;
+    });
+
+    $('#Next').click(function (e) {
+        e.stopPropagation();
+        $('#CarouselControl').carousel('next');
+        return false;
+    });
+</script>
+

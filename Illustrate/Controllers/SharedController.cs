@@ -28,6 +28,8 @@ namespace Illustrate.Controllers
     public class DemoController : BaseController { }
     public class LaserController : BaseController { }
 
+    public class BulldogsController : BaseController { }
+
     // Add more galleries here: (the controller name should be the same as the gallery folder name... wwwroot/{galleryFolder}/{controllerName}
     //
     // Example:
